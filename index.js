@@ -7,6 +7,7 @@ const dynemic_table = require('./routes/dynemic-table/dynemictable');
 const { getLogin } = require('./controllers/main-login-project/practical1');
 const cucu_cube = require('./routes/cucu-cube/cucu-cube');
 const tic_tac_toe = require('./routes/tic-tac-toe/tic-tac-toe');
+const sorting_Int = require('./routes/sorting-int-char-string/sorting');
 
 require('dotenv').config()
 
@@ -31,6 +32,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/dynemic-table",dynemic_table)
         app.use("/cucu-cube",cucu_cube)
         app.use("/tic-tac-toe",tic_tac_toe)
+        app.use("/sorting-int",sorting_Int)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
