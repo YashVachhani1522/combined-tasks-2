@@ -10,6 +10,7 @@ const tic_tac_toe = require('./routes/tic-tac-toe/tic-tac-toe');
 const sorting_Int = require('./routes/sorting-int-char-string/sorting');
 const jsevent = require('./routes/event-prac/event');
 const getatt = require('./routes/student-attendance/student');
+const studentresult = require('./routes/student-result/student');
 
 require('dotenv').config()
 
@@ -37,6 +38,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/sorting-int",sorting_Int)
         app.use("/js-event",jsevent)
         app.use("/std-attendance",getatt)
+        app.use("/student-result",studentresult)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
