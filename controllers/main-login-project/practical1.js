@@ -3,8 +3,8 @@
 const md5 = require('md5');
 // const router=express.Router()
 const jwt=require('jsonwebtoken');
-const database = require('../../../models/main-login-project/database');
-const randomnum = require('../../../models/main-login-project/user');
+const database = require('../../models/main-login-project/database');
+const randomnum = require('../../models/main-login-project/user');
 
 
 
