@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 const dynemic_table = require('./routes/dynemic-table/dynemictable');
 const { getLogin } = require('./controllers/main-login-project/practical1');
 const cucu_cube = require('./routes/cucu-cube/cucu-cube');
+const tic_tac_toe = require('./routes/tic-tac-toe/tic-tac-toe');
 
 require('dotenv').config()
 
@@ -29,6 +30,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/main-login-project",router);
         app.use("/dynemic-table",dynemic_table)
         app.use("/cucu-cube",cucu_cube)
+        app.use("/tic-tac-toe",tic_tac_toe)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
