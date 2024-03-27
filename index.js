@@ -1,6 +1,6 @@
 const express=require('express');
 const path = require('path');
-const router = require('../routes/main-login-project/practical-1');
+const router = require('./routes/main-login-project/practical-1');
 const app=express();
 var cookieParser = require('cookie-parser')
 
