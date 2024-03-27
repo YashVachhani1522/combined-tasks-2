@@ -11,6 +11,7 @@ const sorting_Int = require('./routes/sorting-int-char-string/sorting');
 const jsevent = require('./routes/event-prac/event');
 const getatt = require('./routes/student-attendance/student');
 const studentresult = require('./routes/student-result/student');
+const delisearch = require('./routes/deli-search/deli');
 
 require('dotenv').config()
 
@@ -39,6 +40,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/js-event",jsevent)
         app.use("/std-attendance",getatt)
         app.use("/student-result",studentresult)
+        app.use("/deli-search",delisearch)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
