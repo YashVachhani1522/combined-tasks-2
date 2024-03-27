@@ -17,7 +17,7 @@ const getAttendance=((req,res)=>{
             host:"localhost",
             user:"root",
             password:"Root@123",
-            database:"student_27"
+            database:"combinedtasks"
         });
         
         con.connect((err)=>{
@@ -25,7 +25,7 @@ const getAttendance=((req,res)=>{
             console.log("conected....");
     
     
-            var q=`select student_master.std_id,first_name,last_name,count(attendance.std_id) as no_of_day,round(count(attendance.std_id)/.3,2) as "percentage"from student_master left join attendance on student_master.std_id=attendance.std_id where attendance="present" and month(attance_date)=${mon} and year(attance_date)=${year} group by attendance.std_id order by attendance.std_id asc limit ${data_per_page} offset ${start};`
+            var q=`select stdatt_student_master.std_id,first_name,last_name,count(stdatt_attendance.std_id) as no_of_day,round(count(stdatt_attendance.std_id)/.3,2) as "percentage"from stdatt_student_master left join stdatt_attendance on stdatt_student_master.std_id=stdatt_attendance.std_id where attendance="present" and month(attance_date)=${mon} and year(attance_date)=${year} group by stdatt_attendance.std_id order by stdatt_attendance.std_id asc limit ${data_per_page} offset ${start};`
     
             var mypromise=new Promise((resolve,reject)=>{
                 con.query(q,(err,result)=>{
