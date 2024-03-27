@@ -5,6 +5,7 @@ const app=express();
 var cookieParser = require('cookie-parser');
 const dynemic_table = require('./routes/dynemic-table/dynemictable');
 const { getLogin } = require('./controllers/main-login-project/practical1');
+const cucu_cube = require('./routes/cucu-cube/cucu-cube');
 
 require('dotenv').config()
 
@@ -27,6 +28,7 @@ app.listen(process.env.PORT,(err)=>{
     {   
         app.use("/main-login-project",router);
         app.use("/dynemic-table",dynemic_table)
+        app.use("/cucu-cube",cucu_cube)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
