@@ -17,7 +17,7 @@ var con=mysql.createConnection({
     host:"localhost",
     user:"root",
     password:"Root@123",
-    database:"student_27"
+    database:"combinedtasks"
 });
 
 con.connect((err)=>{
@@ -25,7 +25,7 @@ con.connect((err)=>{
     console.log("conected....");
 
 
-    var q=`select student_master.std_id,student_master.first_name,
+    var q=`select stdatt_student_master.std_id,stdatt_student_master.first_name,
     sum( 
     case 
         when exam_id=1 then theory_mark
@@ -65,10 +65,10 @@ con.connect((err)=>{
     sum(
         theory_mark+practical_mark
     )as total_mark
-    from result
-    left join student_master on
-    result.std_id=student_master.std_id
-    GROUP BY result.std_id
+    from stdatt_result
+    left join stdatt_student_master on
+    stdatt_result.std_id=stdatt_student_master.std_id
+    GROUP BY stdatt_result.std_id
     limit ${start},${data_per_page};`
 
     var mypromise=new Promise((resolve,reject)=>{
@@ -97,7 +97,7 @@ var con=mysql.createConnection({
 host:"localhost",
 user:"root",
 password:"Root@123",
-database:"student_27"
+database:"combinedtasks"
 });
 
 con.connect((err)=>{
@@ -105,21 +105,21 @@ if(err)console.log(err)
 console.log("conected....");
 
 
-var q=`select student_master.std_id,first_name,last_name,
-count(attendance.std_id) as no_of_day,
-round(count(attendance.std_id)/.3,2) as "percentage"
-from student_master left join attendance
-on student_master.std_id=attendance.std_id
-where attendance="present" and month(attance_date)='12' and year(attance_date)='2023' and attendance.std_id=${id}
-group by attendance.std_id 
-order by attendance.std_id asc;`
+var q=`select stdatt_student_master.std_id,first_name,last_name,
+count(stdatt_attendance.std_id) as no_of_day,
+round(count(stdatt_attendance.std_id)/.3,2) as "percentage"
+from stdatt_student_master left join stdatt_attendance
+on stdatt_student_master.std_id=stdatt_attendance.std_id
+where attendance="present" and month(attance_date)='12' and year(attance_date)='2023' and stdatt_attendance.std_id=${id}
+group by stdatt_attendance.std_id 
+order by stdatt_attendance.std_id asc;`
 
 var q2=`select subject_name,subject_id,exam_name,theory_mark,practical_mark
-from result
-left join subject_master on
-result.sub_id=subject_master.subject_id
-left join exam_master on
-result.exam_id=exam_master.exam_id
+from stdatt_result
+left join stdatt_subject_master on
+stdatt_result.sub_id=stdatt_subject_master.subject_id
+left join stdatt_exam_master on
+stdatt_result.exam_id=stdatt_exam_master.exam_id
 where std_id=${id};`
 
 var mypromise=new Promise((resolve,reject)=>{
