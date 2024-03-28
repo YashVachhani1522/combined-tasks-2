@@ -7,7 +7,7 @@ const router=express.Router();
 
 
 const getComponent=(async(req,response)=>{
-    var db=new dbconnection('job_ap_dob_29');
+    var db=new dbconnection('combinedtasks');
     // var res=await db.executequery('select * from option_master');
     // var res2=await db.executequery('select * from select_master');
     // console.log(res);
