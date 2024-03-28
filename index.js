@@ -18,6 +18,7 @@ const paginationorderby = require('./routes/pagination-orderby/pagiroutes');
 const citystate = require('./routes/city-state-combo/citystate');
 const timezone = require('./routes/time-zone/time-zone');
 const ajaxform = require('./routes/ajax-insert-update-form/ajax-form');
+const jsonapi = require('./routes/json-placeholder/json');
 
 require('dotenv').config()
 
@@ -53,6 +54,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/city-state",citystate)
         app.use("/time-zone",timezone)
         app.use("/ajax-form",ajaxform)
+        app.use("/json-placeholder",jsonapi)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
