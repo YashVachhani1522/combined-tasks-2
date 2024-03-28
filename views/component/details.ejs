@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form action="/component/" method="get">
+        <input type="text" name="query">
+        <input type="submit" value="Create">
+    </form>
+
+    <% if(data!=false) {%>
+    
+
+    <p><%=data[0].select_name%></p>
+    <% if(data[0].type=='dropdown') {%>
+
+        <% if(data[0].multiple=='yes') {%>
+            <select name="data[0].select_name" multiple>
+            <%}else{%>
+            <select name="data[0].select_name">
+            <%}%>       
+            <%  for(var i=0;i<data.length;i++){%>
+                <option name="<%=data[i].option_key%>"><%=data[i].option_label%></option>
+                <%}%>
+            </select>
+    <%}else{%>
+        <%  for(var i=0;i<data.length;i++){%>
+            <input type="<%=data[i].type%>" name="<%=data[i].select_name%>" id="<%=data[i].option_key%>"><%=data[i].option_label%>
+        <%}%>
+    <%}%>
+
+    <%}%>       
+
+    
+</body>
+</html>

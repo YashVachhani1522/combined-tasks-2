@@ -7,7 +7,7 @@ const database = require('../../models/deli-search/connection');
 
 
 const getDeli=(async(req,res)=>{
-    var db=new database("student_27");
+    var db=new database("combinedtasks");
 
 
     try{
@@ -20,7 +20,7 @@ const getDeli=(async(req,res)=>{
             var data=async()=>
             {
 
-                var result=await db.fatchdata("select * from student_master");
+                var result=await db.fatchdata("select * from stdatt_student_master");
                 console.log(result);
                 var arr=Object.keys(result[0])
                 res.render("deli-search/page1.ejs",{data:result,fields:arr,error:false});
@@ -39,7 +39,7 @@ const postDeli=(async(req,res)=>{
     var count=0;
     var obj=fun(str);
 
-    var q=`select * from student_master where `
+    var q=`select * from stdatt_student_master where `
     
     var std=fun2(obj.std_id,'std_id');
     if(std!="")
@@ -93,7 +93,7 @@ const postDeli=(async(req,res)=>{
         q+=gender;
     }
     console.log(q);
-    var db=new database("student_27");
+    var db=new database("combinedtasks");
 
 
     try{
