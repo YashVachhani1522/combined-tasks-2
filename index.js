@@ -16,6 +16,7 @@ const component = require('./routes/component/component');
 const simpleinsertupdate = require('./routes/insert-update-employee-form/insertupdate');
 const paginationorderby = require('./routes/pagination-orderby/pagiroutes');
 const citystate = require('./routes/city-state-combo/citystate');
+const timezone = require('./routes/time-zone/time-zone');
 
 require('dotenv').config()
 
@@ -49,6 +50,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/insert-update-employee-form/",simpleinsertupdate)
         app.use("/pagination-orderby",paginationorderby)
         app.use("/city-state",citystate)
+        app.use("/time-zone",timezone)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
