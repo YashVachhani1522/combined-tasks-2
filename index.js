@@ -14,6 +14,7 @@ const studentresult = require('./routes/student-result/student');
 const delisearch = require('./routes/deli-search/deli');
 const component = require('./routes/component/component');
 const simpleinsertupdate = require('./routes/insert-update-employee-form/insertupdate');
+const paginationorderby = require('./routes/pagination-orderby/pagiroutes');
 
 require('dotenv').config()
 
@@ -45,6 +46,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/deli-search",delisearch)
         app.use("/component",component)
         app.use("/insert-update-employee-form/",simpleinsertupdate)
+        app.use("/pagination-orderby",paginationorderby)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
