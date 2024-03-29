@@ -21,6 +21,8 @@ const ajaxform = require('./routes/ajax-insert-update-form/ajax-form');
 const jsonapi = require('./routes/json-placeholder/json');
 const andorsearch = require('./routes/perticular-search-and-or/search');
 const htmlcss1 = require('./routes/html-css-1/html');
+const htmlcss2 = require('./routes/html-css-2/html');
+const htmlcss3 = require('./routes/html-css-3/html');
 
 require('dotenv').config()
 
@@ -59,6 +61,8 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/json-placeholder",jsonapi)
         app.use("/and-or-search",andorsearch)
         app.use("/html-css-1",htmlcss1)
+        app.use("/html-css-2",htmlcss2)
+        app.use("/html-css-3",htmlcss3)
         app.get("/",getLogin);
 
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
