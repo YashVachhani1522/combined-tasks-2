@@ -321,4 +321,8 @@ const getDashboardUserId=((req,res)=>{
     res.render('main-login-project/dashboard.ejs')
 })
 
-module.exports={getRegForm,getUserActivation,postUser,postUserActivation,getDataActivation,getLogin,postLogin,getForget,postForget,getForgetActivation,postForgetActivation,getDashboardUserId}
+const getLogout=(req,res)=>{
+    var token=req.cookies.token
+    res.clearCookie("token").redirect("/main-login-project/login")
+}
+module.exports={getRegForm,getUserActivation,postUser,postUserActivation,getDataActivation,getLogin,postLogin,getForget,postForget,getForgetActivation,postForgetActivation,getDashboardUserId,getLogout}
