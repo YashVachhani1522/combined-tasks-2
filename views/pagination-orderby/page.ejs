@@ -21,7 +21,7 @@
         td{
             text-align: center;
             font-weight: bold;
-            padding: 8px;
+            padding: 3px;
         }
         body{
             padding-bottom: 100px;
@@ -38,6 +38,27 @@
 <body>
     <% if(pageno<=250){ %>
     <p>order : <%=direction%></p>
+    <div class="pagination" style="margin-left:45%; margin-top: 3%;">
+        <% if(pageno == 1) { %>
+            <a href="/pagination-orderby/users/1"><button disabled><<</button></a>
+            <a href="/pagination-orderby/users/1"><button disabled><</button></a>    
+        <% } else { %>
+                <a href="/pagination-orderby/users/1"><button><<</button></a>
+                <a href="/pagination-orderby/users/<%=pageno-1%>"><button><</button></a>
+        <% } %>
+
+            <a><%=pageno%></a>
+
+        <%if(pageno == 20) { %>
+            <a href="/pagination-orderby/users/20"><button disabled>></button></a>
+            <a href="/pagination-orderby/users/20"><button disabled>>></button></a>
+        <% } else { %>
+                <a  href="/pagination-orderby/users/<%=pageno+1%>"><button>></button></a>
+                <a href="/pagination-orderby/users/20"><button>>></button></a>
+        <% } %>
+
+                    <p style="margin-left: -22%; margin-top: 5%;">total record=<%=totalrec%></p>
+    </div>
     <table style="border: 1px solid black;">
         <tr class="btn" style="text-align: center;">
             
@@ -102,27 +123,7 @@
     </table>
 
 
-        <div class="pagination" style="margin-left:45%; margin-top: 3%;">
-            <% if(pageno == 1) { %>
-                <a href="/pagination-orderby/users/1"><button disabled><<</button></a>
-                <a href="/pagination-orderby/users/1"><button disabled><</button></a>    
-            <% } else { %>
-                    <a href="/pagination-orderby/users/1"><button><<</button></a>
-                    <a href="/pagination-orderby/users/<%=pageno-1%>"><button><</button></a>
-            <% } %>
-
-                <a><%=pageno%></a>
-
-            <%if(pageno == 20) { %>
-                <a href="/pagination-orderby/users/20"><button disabled>></button></a>
-                <a href="/pagination-orderby/users/20"><button disabled>>></button></a>
-            <% } else { %>
-                    <a  href="/pagination-orderby/users/<%=pageno+1%>"><button>></button></a>
-                    <a href="/pagination-orderby/users/20"><button>>></button></a>
-            <% } %>
-    
-                        <p style="margin-left: -22%; margin-top: 5%;">total record=<%=totalrec%></p>
-        </div>
+      
         <% } else { %>
            <p>ERROR : Invalid Page Number</p>
         <% } %>

@@ -7,12 +7,21 @@
             border-collapse: collapse;
             padding: 10px;
         }
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width>, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
+    <div class="container">
+
+   
     <% if(pageno<21) { %>
           
     <br>
@@ -51,8 +60,7 @@
             </tr>
             <% } %>
     </table>
-
-    <div class="pagination" style="margin-left:45%; margin-top: 3%;">
+    <div class="pagination" style="margin-top: 5%;">
         <% if(pageno == 1) { %>
             <a href="/std-attendance/?month=<%=mon%>&page=1"><button disabled><<</button></a>
             <a href="/std-attendance/?month=<%=mon%>&page=1"><button disabled><</button></a>    
@@ -76,7 +84,10 @@
      <% } else { %>
             <h2>ERROR : Invalid Page</h2>
         <% } %>
+</div>
+
 </body>
+
 <script>
 
     let myfun= ()=>{

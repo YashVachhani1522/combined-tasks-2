@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        .container{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+        }
+        
+    </style>
     <script>
             const fun=(id)=>{
             const select=document.getElementById(id)
@@ -26,6 +35,8 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="container">
+    <P>Time Zone Converter</P>
     <select id="sel" onchange="fun(this.id)">
         <Option value='Africa/Abidjan'>Africa/Abidjan</Option>
 <Option value='Africa/Accra'>Africa/Accra</Option>
@@ -1215,5 +1226,7 @@
 <Option value='WET'>WET</Option>
     </select>
     <p id="print-sc"></p>
+</div>
+
 </body>
 </html>
