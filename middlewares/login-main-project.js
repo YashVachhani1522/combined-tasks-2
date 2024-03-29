@@ -5,7 +5,9 @@ const checkToken=(req,res,next)=>{
     if(req.cookies.token!=undefined)
     {
         var token=req.cookies.token
+        console.log(req.cookies)
         const decode=jwt.verify(token,process.env.SECRET_KEY)
+        console.log(decode)
         if(decode.id!="")
         {
             next()

@@ -19,6 +19,7 @@ const citystate = require('./routes/city-state-combo/citystate');
 const timezone = require('./routes/time-zone/time-zone');
 const ajaxform = require('./routes/ajax-insert-update-form/ajax-form');
 const jsonapi = require('./routes/json-placeholder/json');
+const andorsearch = require('./routes/perticular-search-and-or/search');
 
 require('dotenv').config()
 
@@ -55,6 +56,7 @@ app.listen(process.env.PORT,(err)=>{
         app.use("/time-zone",timezone)
         app.use("/ajax-form",ajaxform)
         app.use("/json-placeholder",jsonapi)
+        app.use("/and-or-search",andorsearch)
         app.get("/",getLogin);
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
     }
