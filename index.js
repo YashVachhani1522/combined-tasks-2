@@ -23,6 +23,7 @@ const andorsearch = require('./routes/perticular-search-and-or/search');
 const htmlcss1 = require('./routes/html-css-1/html');
 const htmlcss2 = require('./routes/html-css-2/html');
 const htmlcss3 = require('./routes/html-css-3/html');
+const forallcheckToken = require('./middlewares/forallroutercheck');
 
 require('dotenv').config()
 
@@ -44,25 +45,25 @@ app.listen(process.env.PORT,(err)=>{
     else
     {   
         app.use("/main-login-project",router);
-        app.use("/dynemic-table",dynemic_table)
-        app.use("/cucu-cube",cucu_cube)
-        app.use("/tic-tac-toe",tic_tac_toe)
-        app.use("/sorting-int",sorting_Int)
-        app.use("/js-event",jsevent)
-        app.use("/std-attendance",getatt)
-        app.use("/student-result",studentresult)
-        app.use("/deli-search",delisearch)
-        app.use("/component",component)
-        app.use("/insert-update-employee-form/",simpleinsertupdate)
-        app.use("/pagination-orderby",paginationorderby)
-        app.use("/city-state",citystate)
-        app.use("/time-zone",timezone)
-        app.use("/ajax-form",ajaxform)
-        app.use("/json-placeholder",jsonapi)
-        app.use("/and-or-search",andorsearch)
-        app.use("/html-css-1",htmlcss1)
-        app.use("/html-css-2",htmlcss2)
-        app.use("/html-css-3",htmlcss3)
+        app.use("/dynemic-table",forallcheckToken,dynemic_table)
+        app.use("/cucu-cube",forallcheckToken,cucu_cube)
+        app.use("/tic-tac-toe",forallcheckToken,tic_tac_toe)
+        app.use("/sorting-int",forallcheckToken,sorting_Int)
+        app.use("/js-event",forallcheckToken,jsevent)
+        app.use("/std-attendance",forallcheckToken,getatt)
+        app.use("/student-result",forallcheckToken,studentresult)
+        app.use("/deli-search",forallcheckToken,delisearch)
+        app.use("/component",forallcheckToken,component)
+        app.use("/insert-update-employee-form/",forallcheckToken,simpleinsertupdate)
+        app.use("/pagination-orderby",forallcheckToken,paginationorderby)
+        app.use("/city-state",forallcheckToken,citystate)
+        app.use("/time-zone",forallcheckToken,timezone)
+        app.use("/ajax-form",forallcheckToken,ajaxform)
+        app.use("/json-placeholder",forallcheckToken,jsonapi)
+        app.use("/and-or-search",forallcheckToken,andorsearch)
+        app.use("/html-css-1",forallcheckToken,htmlcss1)
+        app.use("/html-css-2",forallcheckToken,htmlcss2)
+        app.use("/html-css-3",forallcheckToken,htmlcss3)
         app.get("/",getLogin);
 
         console.log(`server listen on http://${process.env.HOST}:${process.env.PORT}`)
