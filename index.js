@@ -44,6 +44,7 @@ app.listen(process.env.PORT,(err)=>{
     }
     else
     {   
+        console.log("yes")
         app.use("/main-login-project",router);
         app.use("/dynemic-table",forallcheckToken,dynemic_table)
         app.use("/cucu-cube",forallcheckToken,cucu_cube)

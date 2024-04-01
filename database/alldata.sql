@@ -435,19 +435,19 @@ INSERT INTO `stdatt_result` VALUES (1,1,1,1,16,10),(2,1,1,2,24,14),(3,1,1,3,61,1
 UNLOCK TABLES;
 
 
-create table users(
-    id int primary key auto_increment,
-    first_name varchar(30),
-    last_name varchar(30),
-    email varchar(150),
-    phone_no char(10),
-    password text,
-    salt varchar(4),
-    activation_code varchar(12),
-    for_forgot timestamp default current_timestamp,
-    create_time timestamp default current_timestamp,
-    status int default 0,
-    unique key(email),
-    unique key(phone_no),
-    unique key(activation_code)
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(15) DEFAULT NULL,
+  `last_name` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `phone_no` varchar(15) DEFAULT NULL,
+  `password` varchar(250) DEFAULT NULL,
+  `salt` varchar(4) DEFAULT NULL,
+  `activation_code` varchar(12) DEFAULT NULL,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `for_forgot` datetime DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(45) DEFAULT 'inActive',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `phone_no` (`phone_no`)
 );

@@ -41,6 +41,7 @@ class database{
     }
     
     executrquery=async(q)=>{
+        console.log(q)
         var con=await this.connection()
         var res=new Promise((resolve,reject)=>{
             var res=con.query(q,(err,result)=>{
@@ -61,6 +62,7 @@ class database{
         })
         return res;
     }
+
 
     fatchdata2=async(table,id)=>{
         var con=await this.connection()

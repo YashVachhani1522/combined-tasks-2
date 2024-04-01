@@ -146,10 +146,12 @@ const getLogin=((req,res)=>{
 })
 
 const postLogin=(async(req,res)=>{
-
     var db=new database(process.env.database)
+    console.log("____________-",db)
     // console.log(`select * from users where email='${req.body.emaillogin}' or phone_no='${req.body.emaillogin}'`)
     var result=await db.executrquery(`select * from users where email='${req.body.emaillogin}' or phone_no='${req.body.emaillogin}'`)
+    console.log(result)
+
     if(result.length==0)
     {
         res.send(

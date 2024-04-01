@@ -269,7 +269,9 @@ const login=async()=>{
             'content-type':'application/x-www-form-urlencoded'
         }  
     })
+    console.log(res)
     res=await res.json();
+    console.log(res)
     if(res.flag==false)
         {
             document.getElementById('print-err-2').style.display='block'
