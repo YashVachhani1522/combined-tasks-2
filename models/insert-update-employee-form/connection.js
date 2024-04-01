@@ -9,7 +9,7 @@ class connection{
         this.con=mysql.createConnection({
             user:"root",
             host:"localhost",
-            password:"Root@123",
+            password:"",
             database:db,
             dateStrings:true
         })

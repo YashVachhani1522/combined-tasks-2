@@ -1,10 +1,7 @@
-// const express=require('express');
-// const send = require('send');
 const md5 = require('md5');
-// const router=express.Router()
 const jwt=require('jsonwebtoken');
-const database = require('../../models/main-login-project/database');
 const randomnum = require('../../models/main-login-project/user');
+const database = require('../../models/ajax-insert-update-form/database');
 
 
 
@@ -15,7 +12,7 @@ const getRegForm=((req,res)=>{
 const postUser=(async(req,res)=>{
     var data=req.body
     // console.log(data)
-    var db=new database('registration');
+    var db=new database(process.env.database);
     var result=await db.executrquery(`select * from users where email='${data.email}' or phone_no='${data.phone_no}'`)
    
     if(typeof(result)=="string")
@@ -26,7 +23,7 @@ const postUser=(async(req,res)=>{
 
         })
     }
-
+    console.log(result)
     if(result.length>0)
     {   
         if(result[0].status=="inActive")
@@ -76,7 +73,7 @@ const postUser=(async(req,res)=>{
 })
 
 const getUserActivation=async(req,res)=>{
-    db=new database('registration');
+    db=new database(process.env.database);
     var result=await db.executrquery(`select create_time from users where activation_code='${req.params.activationcode}'`)
     // console.log(result)
     
@@ -109,8 +106,9 @@ const postUserActivation=(async(req,res)=>{
 
     if(data.password!="")
     {
-        var db=new database('registration');
+        var db=new database(process.env.database);
         var result=await db.update({status:'Active'},'users',{activation_code:req.params.activationcode})
+        console.log(result)
         if(result.changedRows>0)
         {
             var salt=randomnum(4);
@@ -139,7 +137,7 @@ const postUserActivation=(async(req,res)=>{
 })
 
 const getDataActivation=(async(req,res)=>{
-    var db=new database('registration');
+    var db=new database(process.env.database);
     var result=await db.executrquery(`select email from users where activation_code='${req.params.activationcode}'`)
     res.send(result);
 })
@@ -149,7 +147,7 @@ const getLogin=((req,res)=>{
 
 const postLogin=(async(req,res)=>{
 
-    var db=new database('registration')
+    var db=new database(process.env.database)
     // console.log(`select * from users where email='${req.body.emaillogin}' or phone_no='${req.body.emaillogin}'`)
     var result=await db.executrquery(`select * from users where email='${req.body.emaillogin}' or phone_no='${req.body.emaillogin}'`)
     if(result.length==0)
@@ -190,7 +188,7 @@ const getForget=('/forget',(req,res)=>{
 })
 const postForget=('/forget',async(req,res)=>{
     var data=req.body;
-    var db=new database("registration")
+    var db=new database(process.env.database)
     var currtime=new Date();
     // console.log(`${currtime.getFullYear()}-${currtime.getMonth()}-${currtime.getDate()} ${currtime.getHours()}:${+currtime.getMinutes()}:${currtime.getSeconds()}`)
    
@@ -253,7 +251,7 @@ const postForget=('/forget',async(req,res)=>{
 
 const getForgetActivation=(async(req,res)=>{
     console.log(req.params.activationcode)
-    db=new database('registration');
+    db=new database(process.env.database);
     var result=await db.executrquery(`select for_forgot from users where activation_code='${req.params.activationcode}'`)
 
     console.log(result)
@@ -316,12 +314,22 @@ const postForgetActivation=(async(req,res)=>{
 })
 const getDashboardUserId=((req,res)=>{
     // console.log(req.cookies)
-
-    res.render('main-login-project/dashboard.ejs')
+    res.render('main-login-project/home.ejs')
 })
 
+const getWelcome=(req,res)=>{
+    res.render('main-login-project/dashboard.ejs')
+}
 const getLogout=(req,res)=>{
     var token=req.cookies.token
     res.clearCookie("token").redirect("/main-login-project/login")
 }
-module.exports={getRegForm,getUserActivation,postUser,postUserActivation,getDataActivation,getLogin,postLogin,getForget,postForget,getForgetActivation,postForgetActivation,getDashboardUserId,getLogout}
+
+const getMenu=(req,res)=>{
+    res.render("main-login-project/menu.ejs");
+}
+
+const getHome=(req,res)=>{
+    res.render("main-login-project/home.ejs");
+}
+module.exports={getRegForm,getUserActivation,postUser,postUserActivation,getDataActivation,getLogin,postLogin,getForget,postForget,getForgetActivation,postForgetActivation,getDashboardUserId,getLogout,getMenu,getHome,getWelcome}

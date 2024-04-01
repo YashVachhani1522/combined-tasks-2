@@ -4,9 +4,9 @@ class database{
 
     constructor(db)
     {
-        this.user='root';
-        this.host='localhost';
-        this.password='Root@123';
+        this.user=process.env.user;
+        this.host=process.env.host;
+        this.password=process.env.password;
         this.database=db;
         
     }
@@ -114,6 +114,27 @@ class database{
         console.log(q)
         return await this.executrquery(q);
     }
+    update2=async(data,table,conditions)=>{
+        var q=`update ${table} set `
+        Object.keys(data).forEach(key=>{
+            if(data[key]==null)
+            {
+                q+=`${key}=${data[key]},`
+            }
+            else
+            {
+                q+=`${key}='${data[key]}',`
+            }
+        })
+        q=q.slice(0,q.length-1)+' where ';
+        Object.keys(conditions).forEach(key=>{
+            q+=`${key}='${conditions[key]}' or `;
+        })
+        q=q.slice(0,q.length-4)+`;`
+        console.log(q)
+        return await this.executrquery(q);
+    }
+    
     
     delete=async(table,conditions)=>{
         var q=`delete from ${table} where `

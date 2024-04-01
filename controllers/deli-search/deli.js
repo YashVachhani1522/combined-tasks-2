@@ -1,27 +1,25 @@
 const express=require('express');
 const fun = require('../../models/deli-search/string');
 const fun2 = require('../../models/deli-search/concat');
-const database = require('../../models/deli-search/connection');
+const database = require('../../models/ajax-insert-update-form/database');
 
 
 
 
 const getDeli=(async(req,res)=>{
-    var db=new database("combinedtasks");
+    var db=new database(process.env.database);
 
 
     try{
             var con=async()=>
             {
                 var fire=await db.connect();
-                console.log(fire)
             }
     
             var data=async()=>
             {
 
-                var result=await db.fatchdata("select * from stdatt_student_master");
-                console.log(result);
+                var result=await db.executrquery("select * from stdatt_student_master");
                 var arr=Object.keys(result[0])
                 res.render("deli-search/page1.ejs",{data:result,fields:arr,error:false});
             }
@@ -93,21 +91,14 @@ const postDeli=(async(req,res)=>{
         q+=gender;
     }
     console.log(q);
-    var db=new database("combinedtasks");
+    var db=new database(process.env.database);
 
 
     try{
-            var con=async()=>
-            {
-                var fire=await db.connect();
-                console.log(fire)
-            }
-    
             var data=async()=>
             {
 
-                var result2=await db.fatchdata(q);
-                console.log(result2);
+                var result2=await db.executrquery(q);
                 var arr2=Object.keys(result2[0])
                 res.render("deli-search/page1.ejs",{data:result2,fields:arr2,error:false});
             }

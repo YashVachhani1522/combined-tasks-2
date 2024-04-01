@@ -2,9 +2,14 @@ const express=require('express');
 // const serverside = require('./midlewear/serverside');
 const connection = require('../../models/insert-update-employee-form/connection');
 const serverside = require('../../middlewares/insertupdate');
+const database = require('../../models/ajax-insert-update-form/database');
 // const connection = require('./package/connection');
 const router=express.Router()
 
+
+const display = ((req, res)=>{
+    res.render("insert-update-employee-form/gridpage.ejs")
+})
 
 const getInsert=((req,res)=>{
     res.render('insert-update-employee-form/form.ejs',{id:false});
@@ -14,11 +19,7 @@ const postInsert=(serverside,async(req,res)=>{
     var data=req.body;
     // console.log(data);
 
-    var db=new connection('combinedtasks')
-
- 
-
-
+    var db=new connection(process.env.database)
 
     var res1=await db.createquery('baisic_details',{
         fname:data.firstname,
@@ -284,12 +285,16 @@ const postInsert=(serverside,async(req,res)=>{
         // console.log(res2);
     res.end("form submited.....");s
 })
-
+const getbasicdetailsdata=(async(req,res)=>{
+    var db=new connection(process.env.database)
+    var baisic_details=await db.fatchdata("select can_id,fname,lname,email,phone_number,gender from baisic_details");
+    res.send(baisic_details);
+})
 const getData=(async(req,res)=>{
    
     var id=req.params.id
     // console.log(id);
-    var db=new connection('combinedtasks')
+    var db=new connection(process.env.database)
     var baisic_details=await db.fatchdata2('baisic_details',id);
     var education=await db.fatchdata2('education',id);
     var languages=await db.fatchdata2('language_known',id);
@@ -339,7 +344,7 @@ const postUpdate=(serverside,async(req,res)=>{
     var conditions={
         can_id:data.canid
     }
-    var obj=new connection('combinedtasks')
+    var obj=new connection(process.env.database)
     var result=await obj.update('baisic_details',obj10,conditions);
 
     var oldres=await obj.fatchdata2('education',data.canid)
@@ -831,4 +836,17 @@ const postUpdate=(serverside,async(req,res)=>{
         res.send('data updated....')
 })  
 
-module.exports={getInsert,postInsert,getData,getUpdate,postUpdate};
+const getDelete=(async(req,res)=>{
+    var id=req.params.id
+    var db=new database(process.env.database)
+    var res1=await db.delete("references_contact",{can_id:id})
+    var res1=await db.delete("work_experience",{can_id:id})
+    var res1=await db.delete("`references`",{can_id:id})
+    var res1=await db.delete("technologies_know",{can_id:id})
+    var res1=await db.delete("language_known",{can_id:id})
+    var res1=await db.delete("education",{can_id:id})
+    var res1=await db.delete("baisic_details",{can_id:id})
+
+    res.redirect("/insert-update-employee-form/display");
+})
+module.exports={getInsert,postInsert,getData,getUpdate,postUpdate,getbasicdetailsdata, display,getDelete};
