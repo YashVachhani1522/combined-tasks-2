@@ -1,7 +1,7 @@
 const fun=(res1,res2,search)=>{
     arr=[];
     final=[];
-    for(var i=0;i<res2.length;i++)
+    for(let i=0;i<res2.length;i++)
     {
         if(search==res2[i].select_name)
         {
@@ -10,7 +10,7 @@ const fun=(res1,res2,search)=>{
         }
     }
 
-    for(var j=0;j<res1.length;j++)
+    for(let j=0;j<res1.length;j++)
     {
         if(arr[0]==res1[j].select_key)
         {
@@ -19,7 +19,7 @@ const fun=(res1,res2,search)=>{
 
         }
     }
-    var obj={
+    let obj={
         arr:arr,
         final:final,
     }    

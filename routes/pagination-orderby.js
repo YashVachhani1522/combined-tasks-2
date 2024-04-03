@@ -1,7 +1,7 @@
 
 
 const express = require('express');
-const { getUser, getOrderBy } = require('../../controllers/pagination-orderby/pagination');
+const { getUser, getOrderBy } = require('../controllers/pagination-orderby/pagination');
 const paginationorderby = express.Router();
 
 

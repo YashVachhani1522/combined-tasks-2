@@ -1,5 +1,5 @@
 const req=(arr)=>{
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
         if(document.getElementById(arr[i]).value=="")
         {
@@ -10,7 +10,7 @@ const req=(arr)=>{
 }
 const checkednum=(arr)=>{
     
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
         if(!isNaN(Number(document.getElementById(arr[i]).value)))
         {
@@ -25,7 +25,7 @@ const rg=(id,type)=>{
     let DATE =/\d{4}-\d{2}-\d{2}/
     let YEAR=/(?:(?:19|20)[0-9]{2})/;
     let PER=/(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
-    var EMAIL= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let EMAIL= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     switch(type)
     {
@@ -63,12 +63,12 @@ const rg=(id,type)=>{
     return true;
 }
 const arrayreqvalid=(arr)=>{
-        for(var i=0;i<arr.length;i++)
+        for(let i=0;i<arr.length;i++)
         {
             let obj=arr[i];
             let count=0;
             let inputs=document.getElementsByName(obj.name);
-            for(var j=0;j<inputs.length;j++)
+            for(let j=0;j<inputs.length;j++)
             {
                 if(obj.type=='text')
                 {
@@ -106,13 +106,13 @@ const arrayreqvalid=(arr)=>{
         return true;
 }
 const fun=()=>{
-    var ids=['firstname','lastname','designation','address1','email','address2','p_number','city','zipcode','dob','sscboard','sscpassingyear','sscper','hscboard','hscpassingyear','hscper','ugcname','uguni','ugpassingyear','ugper','ectc','cctc'];    
-    var ans=req(ids);
+    let ids=['firstname','lastname','designation','address1','email','address2','p_number','city','zipcode','dob','sscboard','sscpassingyear','sscper','hscboard','hscpassingyear','hscper','ugcname','uguni','ugpassingyear','ugper','ectc','cctc'];    
+    let ans=req(ids);
 
     if(ans==true)
     {
-        var arr2=['firstname','lastname','designation','address1','address2','city','sscboard','hscboard','ugcname','uguni'];
-        var res2=checkednum(arr2)
+        let arr2=['firstname','lastname','designation','address1','address2','city','sscboard','hscboard','ugcname','uguni'];
+        let res2=checkednum(arr2)
         if(res2!=true)
         {
             document.getElementById('print-err').innerHTML=`Enter valid value ${res2}`;
@@ -169,7 +169,7 @@ const fun=()=>{
        {
             document.getElementById('print-err').innerHTML=`Select value for gender`; return false ;
        } 
-        var obj=[
+        let obj=[
             {
             name:'pg',
             label:'PG',
@@ -262,7 +262,7 @@ const fun=()=>{
             size:'3'
         }
         ]  
-        var obj2=arrayreqvalid(obj);
+        let obj2=arrayreqvalid(obj);
         if(arrayreqvalid(obj)!=true)
         {
             document.getElementById('print-err').innerHTML=`Enter value for ${obj2.label}`; return false ; 

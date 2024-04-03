@@ -1,9 +1,9 @@
 const fun=(str)=>{
-    var arr=[];
-    var temp="";
-    var checking=['_','^','$','}','{'];
+    let arr=[];
+    let temp="";
+    let checking=['_','^','$','}','{'];
 
-    var obj={
+    let obj={
         std_id:[],
         first_name:[],
         last_name:[],
@@ -11,7 +11,7 @@ const fun=(str)=>{
         gender:[],
     }
 
-    for(var i=0;i<str.length;i++)
+    for(let i=0;i<str.length;i++)
     {
         if(checking.indexOf(str[i])>=0)
         {            
@@ -27,7 +27,7 @@ const fun=(str)=>{
     arr.push(temp);
     arr=arr.slice(1,arr.length);
     console.log(arr);
-    for(var j=0;j<arr.length;j=j+2)
+    for(let j=0;j<arr.length;j=j+2)
     {
         switch(arr[j])
         {

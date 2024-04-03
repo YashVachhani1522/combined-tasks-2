@@ -1,5 +1,5 @@
 const express = require('express');
-const { getDemo, getState, getCity, getCityId } = require('../../controllers/city-state-combo/citystate');
+const { getDemo, getState, getCity, getCityId } = require('../controllers/city-state-combo/citystate');
 const citystate = express.Router();
 
 

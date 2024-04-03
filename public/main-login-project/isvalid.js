@@ -1,6 +1,6 @@
 const req=(arr)=>{
-    var res=[];
-    for(var i=0;i<arr.length;i++)
+    let res=[];
+    for(let i=0;i<arr.length;i++)
     {
         if(document.getElementById(arr[i]).nextSibling)
         {
@@ -15,7 +15,7 @@ const req=(arr)=>{
 }
 const rg=(id,type)=>{
     let CONTACT = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
-    var EMAIL= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let EMAIL= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     switch(type)
     {
@@ -37,13 +37,13 @@ const rg=(id,type)=>{
 
 const isvalid=(arr)=>{
     
-    var res=req(arr);
+    let res=req(arr);
     if(res.length>0)
     {
-        for(var i=0;i<res.length;i++)
+        for(let i=0;i<res.length;i++)
         {
             nodes=document.getElementById(res[i]);
-            var p=document.createElement('p');
+            let p=document.createElement('p');
             p.className='text-danger'
             p.innerHTML=`Enter value For ${res[i]}`;
             nodes.insertAdjacentElement("afterend", p);
@@ -63,7 +63,7 @@ const passdata=async()=>{
     if(isvalid(arr)==true)
     {   
     
-        var arr2=[];
+        let arr2=[];
         if(rg('email','email')=="email")
         { 
             arr2.push(rg('email','email'));
@@ -75,10 +75,10 @@ const passdata=async()=>{
         
         if(arr2.length>0)
         {
-            for(var i=0;i<arr2.length;i++)
+            for(let i=0;i<arr2.length;i++)
             {
                 nodes=document.getElementById(arr2[i]);
-                var p=document.createElement('p');
+                let p=document.createElement('p');
                 p.className='text-danger'
                 p.innerHTML=`Enter value For ${arr2[i]}`;
                 nodes.insertAdjacentElement("afterend", p);
@@ -88,9 +88,9 @@ const passdata=async()=>{
         else
         {
             const form=document.getElementById('form-1')
-            var data=new URLSearchParams(new FormData(form))
-            var url='http://localhost:8000/main-login-project/user'
-            var res=await fetch(url,{
+            let data=new URLSearchParams(new FormData(form))
+            let url='http://localhost:8000/main-login-project/user'
+            let res=await fetch(url,{
                 method:'POST',
                 body:data,
                 headers:{
@@ -131,7 +131,7 @@ const passdata=async()=>{
 }   
 
 const updatedata=async()=>{
-    var activationcode=window.location.href.split('/').pop();
+    let activationcode=window.location.href.split('/').pop();
 
     
 
@@ -161,9 +161,9 @@ const updatedata=async()=>{
         
         
         const form=document.getElementById('form-2')
-        var data=new URLSearchParams(new FormData(form))
-        var url=`http://localhost:8000/main-login-project/user/${activationcode}`
-        var res=await fetch(url,{
+        let data=new URLSearchParams(new FormData(form))
+        let url=`http://localhost:8000/main-login-project/user/${activationcode}`
+        let res=await fetch(url,{
             method:'POST',
             body:data,
             headers:{
@@ -195,7 +195,7 @@ const updatedata=async()=>{
 
 }
 const newpassword=async()=>{
-    var activationcode=window.location.href.split('/').pop();
+    let activationcode=window.location.href.split('/').pop();
 
     arr=['password','re_password']
     if(isvalid(arr))
@@ -223,9 +223,9 @@ const newpassword=async()=>{
         
         
         const form=document.getElementById('form-rg')
-        var data=new URLSearchParams(new FormData(form))
-        var url=`http://localhost:8000/main-login-project/forget/${activationcode}`
-        var res=await fetch(url,{
+        let data=new URLSearchParams(new FormData(form))
+        let url=`http://localhost:8000/main-login-project/forget/${activationcode}`
+        let res=await fetch(url,{
             method:'POST',
             body:data,
             headers:{
@@ -260,9 +260,9 @@ const newpassword=async()=>{
 const login=async()=>{
     
     const form=document.getElementById('login')
-    var data=new URLSearchParams(new FormData(form))
-    var url='http://localhost:8000/main-login-project/login'
-    var res=await fetch(url,{   
+    let data=new URLSearchParams(new FormData(form))
+    let url='http://localhost:8000/main-login-project/login'
+    let res=await fetch(url,{   
         method:'post',
         body:data,
         headers:{

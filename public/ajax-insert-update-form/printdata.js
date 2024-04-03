@@ -9,7 +9,7 @@ const fun=async()=>{
 // var page=0;  
 const start=(obj,btn)=>{
 
-    var total_page=Math.ceil(obj.data.length/obj.record_per_page);
+    let total_page=Math.ceil(obj.data.length/obj.record_per_page);
     console.log(total_page,obj.page);
 
     if(total_page==0)
@@ -29,9 +29,9 @@ const start=(obj,btn)=>{
         else
         {
             obj.page++;
-            var start_poi=obj.page*obj.record_per_page;
+            let start_poi=obj.page*obj.record_per_page;
             console.log('start',start_poi);
-            var end=start_poi+obj.record_per_page;  
+            let end=start_poi+obj.record_per_page;  
             console.log('end',end);
 
             printdata(start_poi,end,obj);
@@ -43,8 +43,8 @@ const start=(obj,btn)=>{
     else if(btn=='last')
     {
             obj.page=total_page-1;
-            var start_poi=obj.page*obj.record_per_page;
-            var end=start_poi+obj.record_per_page;
+            let start_poi=obj.page*obj.record_per_page;
+            let end=start_poi+obj.record_per_page;
             
             printdata(start_poi,end,obj);
 
@@ -63,8 +63,8 @@ const start=(obj,btn)=>{
             }
 
             obj.page--;
-            var start_poi=obj.page*obj.record_per_page;
-            var end=start_poi+obj.record_per_page;
+            let start_poi=obj.page*obj.record_per_page;
+            let end=start_poi+obj.record_per_page;
             printdata(start_poi,end,obj);
             document.getElementById(obj.btn_id[2]).disabled=false;
             document.getElementById(obj.btn_id[3]).disabled=false;
@@ -73,8 +73,8 @@ const start=(obj,btn)=>{
     else if(btn=='first')
     {
             obj.page=0;
-            var start_poi=obj.page*obj.record_per_page;
-            var end=start_poi+obj.record_per_page;
+            let start_poi=obj.page*obj.record_per_page;
+            let end=start_poi+obj.record_per_page;
             
             printdata(start_poi,end,obj);
 
@@ -98,32 +98,32 @@ const start=(obj,btn)=>{
 const printdata=((strat,end,obj)=>{
     // console.log(obj.page,obj.data.length/obj.record_per_page);
 
-    var tbl=obj.table_id;
-    var tbl_id=document.getElementById(tbl);
-    var data=obj.data;
+    let tbl=obj.table_id;
+    let tbl_id=document.getElementById(tbl);
+    let data=obj.data;
 
-    var fields=['id','first_name','last_name','email','phone_no','gender','operation'];
+    let fields=['id','first_name','last_name','email','phone_no','gender','operation'];
 
     // var fields=Object.keys(data[0]);
     tbl_id.innerHTML="";
    
    
-    var tr=document.createElement('tr');
-    for(var i=0;i<fields.length;i++)
+    let tr=document.createElement('tr');
+    for(let i=0;i<fields.length;i++)
     {
-        var td=document.createElement('td');
+        let td=document.createElement('td');
         td.innerHTML=fields[i];
         tr.appendChild(td)
     }
     tbl_id.appendChild(tr);
 
 
-    for(var i=strat;i<end;i++)
+    for(let i=strat;i<end;i++)
     {
-        var tr=document.createElement('tr');
-        for(var j=0;j<fields.length;j++)
+        tr=document.createElement('tr');
+        for(let j=0;j<fields.length;j++)
         {
-            var td=document.createElement('td')
+            let td=document.createElement('td')
             if(fields[j]=="operation")
             {
                 td.innerHTML=`<a href="/ajax-form/data/${data[i][fields[0]]}">view</a>&emsp;<a href="/ajax-form/update/${data[i][fields[0]]}">Update</a>&emsp;<a href="/ajax-form/delete/${data[i][fields[0]]}">delete</a>`;

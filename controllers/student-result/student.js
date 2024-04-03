@@ -2,22 +2,23 @@ const mysql=require('mysql');
 const database = require('../../models/ajax-insert-update-form/database');
 
 const getResult=(async(req,res)=>{
-            
-    var query = require("url").parse(req.url, true).query;
-    var data_per_page=10;
-    var total_record=200;
-    var page=Number(query.page) || 1;
-    var start=(data_per_page)*(page-1);
+    try{
+
+    let query = require("url").parse(req.url, true).query;
+    let data_per_page=10;
+    let total_record=200;
+    let page=Number(query.page) || 1;
+    let start=(data_per_page)*(page-1);
     
 
-    var mon_year=query.month || '12-2023';
-    var arr=mon_year.split('-');
-    var mon=arr[0];
-    var year=arr[1];
+    let mon_year=query.month || '12-2023';
+    let arr=mon_year.split('-');
+    let mon=arr[0];
+    let year=arr[1];
 
-    var con=new database(process.env.database)
+    let con=new database(process.env.database)
 
-    var q=`select stdatt_student_master.std_id,stdatt_student_master.first_name,
+    let q=`select stdatt_student_master.std_id,stdatt_student_master.first_name,
     sum( 
     case 
         when exam_id=1 then theory_mark
@@ -63,7 +64,7 @@ const getResult=(async(req,res)=>{
     GROUP BY stdatt_result.std_id
     limit ${start},${data_per_page};`
 
-    var data=await con.executrquery(q)
+    let data=await con.executrquery(q)
     console.log(data);
         if(typeof data=="string")
         {
@@ -73,14 +74,21 @@ const getResult=(async(req,res)=>{
         {
             res.render('student-result/page1.ejs',{res1:data,totalrec:total_record,pageno:page});
         }
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 const getResId=(async(req,res)=>{
-var id=Number(req.params.id);
+try{
 
-var con=new database(process.env.database)
+let id=Number(req.params.id);
 
-var q=`select stdatt_student_master.std_id,first_name,last_name,
+let con=new database(process.env.database)
+
+let q=`select stdatt_student_master.std_id,first_name,last_name,
 count(stdatt_attendance.std_id) as no_of_day,
 round(count(stdatt_attendance.std_id)/.3,2) as "percentage"
 from stdatt_student_master left join stdatt_attendance
@@ -89,7 +97,7 @@ where attendance="present" and month(attance_date)='12' and year(attance_date)='
 group by stdatt_attendance.std_id 
 order by stdatt_attendance.std_id asc;`
 
-var q2=`select subject_name,subject_id,exam_name,theory_mark,practical_mark
+let q2=`select subject_name,subject_id,exam_name,theory_mark,practical_mark
 from stdatt_result
 left join stdatt_subject_master on
 stdatt_result.sub_id=stdatt_subject_master.subject_id
@@ -98,7 +106,7 @@ stdatt_result.exam_id=stdatt_exam_master.exam_id
 where std_id=${id};`
 
 
-var data=await con.executrquery(q)
+let data=await con.executrquery(q)
 if(typeof data=="string")
 {
     console.log(data)
@@ -107,7 +115,7 @@ else
 {
     console.log(data);
 
-    var data2=await con.executrquery(q2);
+    let data2=await con.executrquery(q2);
     if(typeof data2=="string")
     {
         console.log(data2)
@@ -119,11 +127,15 @@ else
         res.render('student-result/page2.ejs',{res2:data2,res1:data});
     }
 }
+}
+catch(e)
+{
+    res.send(e)    
+}
 
 
 
-
-// var con=mysql.createConnection({
+// let con=mysql.createConnection({
 // host:"localhost",
 // user:"root",
 // password:"Root@123",
@@ -135,7 +147,7 @@ else
 // console.log("conected....");
 
 
-// var q=`select stdatt_student_master.std_id,first_name,last_name,
+// let q=`select stdatt_student_master.std_id,first_name,last_name,
 // count(stdatt_attendance.std_id) as no_of_day,
 // round(count(stdatt_attendance.std_id)/.3,2) as "percentage"
 // from stdatt_student_master left join stdatt_attendance
@@ -144,7 +156,7 @@ else
 // group by stdatt_attendance.std_id 
 // order by stdatt_attendance.std_id asc;`
 
-// var q2=`select subject_name,subject_id,exam_name,theory_mark,practical_mark
+// let q2=`select subject_name,subject_id,exam_name,theory_mark,practical_mark
 // from stdatt_result
 // left join stdatt_subject_master on
 // stdatt_result.sub_id=stdatt_subject_master.subject_id
@@ -152,7 +164,7 @@ else
 // stdatt_result.exam_id=stdatt_exam_master.exam_id
 // where std_id=${id};`
 
-// var mypromise=new Promise((resolve,reject)=>{
+// let mypromise=new Promise((resolve,reject)=>{
 //     con.query(q,(err,result)=>{
 //         if(err)reject(err);
 //         else
@@ -164,7 +176,7 @@ else
 // mypromise.then((data)=>{
 //     console.log(data);
 //     // res.render('page2.ejs',{res1:data});
-//     var mypromise2=new Promise((resolve,reject)=>{
+//     let mypromise2=new Promise((resolve,reject)=>{
 //         con.query(q2,(err,result)=>{
 //             if(err)reject(err);
 //             else

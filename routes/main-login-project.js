@@ -1,6 +1,7 @@
+
 const express = require('express');
-const { getRegForm,postUser, getUserActivation, postUserActivation, getDataActivation, getLogin, postLogin, getForget, postForget, getForgetActivation, postForgetActivation, getDashboardUserId, getLogout, getMenu, getHome, getWelcome } = require('../../controllers/main-login-project/practical1');
-const checkToken = require('../../middlewares/login-main-project');
+const { getRegForm,postUser, getUserActivation, postUserActivation, getDataActivation, getLogin, postLogin, getForget, postForget, getForgetActivation, postForgetActivation, getDashboardUserId, getLogout, getMenu, getHome, getWelcome } = require('../controllers/main-login-project/practical1');
+const checkToken = require('../middlewares/login-main-project');
 const router = express.Router();
 
 router.get('/',getRegForm)

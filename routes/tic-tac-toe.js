@@ -1,5 +1,5 @@
 const express = require('express');
-const getTicTacToeGame = require('../../controllers/tic-tac-toe/tic-tac-toe');
+const getTicTacToeGame = require('../controllers/tic-tac-toe/tic-tac-toe');
 const tic_tac_toe = express.Router();
 
 

@@ -8,8 +8,10 @@ const getForm=((req,res)=>{
 })
 
 const postForm=(async(req,res)=>{
-    var data=req.body;
-   var db=new database(process.env.database)
+    try{
+
+    let data=req.body;
+   let db=new database(process.env.database)
 //    console.log(data)
    obj={
     first_name:data.first_name,
@@ -29,16 +31,16 @@ const postForm=(async(req,res)=>{
     current_ctc:data.current_ctc!=""?data.current_ctc:0,
     department:data.department
    }
-   var resset=await db.insertdata(obj,'candidate_masters');
+   let resset=await db.insertdata(obj,'candidate_masters');
 //    console.log(resset)
 //    console.log(resset);
-   var lastid=resset.insertId;
+   let lastid=resset.insertId;
 
    if(data.course!=undefined)
    {
         if(typeof(data.course)=="string")
         {
-            var obj2={
+            let obj2={
                 candidate_id:lastid,
                 course:data.course,
                 board:data.board,
@@ -49,9 +51,9 @@ const postForm=(async(req,res)=>{
         } 
         else
         {
-            for(var i=0;i<data.course.length;i++)
+            for(let i=0;i<data.course.length;i++)
             {
-                 var obj2={
+                 let obj2={
                      candidate_id:lastid,
                      course:data.course[i],
                      board:data.board[i],
@@ -67,7 +69,7 @@ const postForm=(async(req,res)=>{
     {
         if(typeof(data.company_name)=="string")
         {
-            var obj2={
+            let obj2={
                 candidate_id:lastid,
                 company_name:data.company_name,
                 work_designation:data.work_designation,
@@ -78,9 +80,9 @@ const postForm=(async(req,res)=>{
         }
         else
         {
-            for(var i=0;i<data.company_name.length;i++)
+            for(let i=0;i<data.company_name.length;i++)
              {
-             var obj2={
+             let obj2={
                  candidate_id:lastid,
                  company_name:data.company_name[i],
                  work_designation:data.work_designation[i],
@@ -92,7 +94,7 @@ const postForm=(async(req,res)=>{
         }
         
     }
-    var language=[]
+    let language=[]
                                 
    if(data.gujrati!=undefined)
    {
@@ -108,9 +110,9 @@ const postForm=(async(req,res)=>{
    }
     obj={}
     
-    for(var i=0;i<language.length;i++)
+    for(let i=0;i<language.length;i++)
     {
-        var arr=language[i]
+        let arr=language[i]
         obj.candidate_id=lastid,
         obj.language=arr[0];
         arr=arr.slice(1)
@@ -118,7 +120,7 @@ const postForm=(async(req,res)=>{
         db.insertdata(obj,'languages');
     }
 
-    var tech=[]
+    let tech=[]
     if(data.php!=undefined)
     {
         tech.push(data.php)
@@ -136,9 +138,9 @@ const postForm=(async(req,res)=>{
         tech.push(data.laravel)
     }
     obj={}
-    for(var i=0;i<tech.length;i++)
+    for(let i=0;i<tech.length;i++)
     {
-        var arr=tech[i];
+        let arr=tech[i];
         obj.candidate_id=lastid
         obj.technology=arr[0]
         obj.technology_lvl=JSON.stringify([arr[1]])
@@ -149,7 +151,7 @@ const postForm=(async(req,res)=>{
     {
         if(typeof(data.name)=='string')
         {
-            var obj2={
+            let obj2={
                 candidate_id:lastid,
                 name:data.name,
                 contact:data.contact,
@@ -159,9 +161,9 @@ const postForm=(async(req,res)=>{
         }
         else
         {
-            for(var i=0;i<data.name.length;i++)
+            for(let i=0;i<data.name.length;i++)
             {
-                var obj2={
+                let obj2={
                     candidate_id:lastid,
                     name:data.name[i],
                     contact:data.contact[i],
@@ -172,12 +174,22 @@ const postForm=(async(req,res)=>{
         }
         
     }
-   
+}
+catch(e)
+{
+    res.send(e)
+}
 })
 const getData=(async(req,res)=>{
-    var db=new database(process.env.database)
-    var res2=await db.executrquery("select id,first_name,last_name,email,phone_no,gender from candidate_masters");
-    res.send(res2);
+    try{
+        let db=new database(process.env.database)
+        let res2=await db.executrquery("select id,first_name,last_name,email,phone_no,gender from candidate_masters");
+        res.send(res2);
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 
@@ -186,9 +198,10 @@ const getDisplay=(async(req,res)=>{
 })
 
 const getDeleteId=(async(req,res)=>{
+    try{
     id=req.params.id
     // console.log(id)
-    var db=new database(process.env.database);
+    let db=new database(process.env.database);
     db.delete('education_details',{candidate_id:id})
     db.delete('languages',{candidate_id:id})
     db.delete('reference_contacts',{candidate_id:id})
@@ -196,34 +209,39 @@ const getDeleteId=(async(req,res)=>{
     db.delete('technologies',{candidate_id:id})
     db.delete('candidate_masters',{id:id})
     res.redirect("/ajax-form/display")
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 const getDataId=(async(req,res)=>{
-   
-    var id=req.params.id
-    var db=new database(process.env.database)
-    var candidate_masters=await db.executrquery(`select * from candidate_masters where id=${id}`);
+    try{
+    let id=req.params.id
+    let db=new database(process.env.database)
+    let candidate_masters=await db.executrquery(`select * from candidate_masters where id=${id}`);
 
     // console.log(candidate_masters);
 
-    var education_details=await db.executrquery(`select course,board,passing_year,percentage from education_details where candidate_id=${id}`);
+    let education_details=await db.executrquery(`select course,board,passing_year,percentage from education_details where candidate_id=${id}`);
     // console.log(education_details)
-    var languages=await db.executrquery(`select language,language_lvl from languages where candidate_id=${id}`);
+    let languages=await db.executrquery(`select language,language_lvl from languages where candidate_id=${id}`);
     languages.forEach(element => {
             element["language_lvl"]=JSON.parse(element["language_lvl"]);
     });
-    var technologies=await db.executrquery(`select technology,technology_lvl from technologies where candidate_id=${id}`);
+    let technologies=await db.executrquery(`select technology,technology_lvl from technologies where candidate_id=${id}`);
     // console.log(technologies)
     technologies.forEach(element => {
         // console.log(element["technology_lvl"])
         element["technology_lvl"]=JSON.parse(element["technology_lvl"]);
 });
-    var reference_contacts=await db.executrquery(`select name,contact,relation from reference_contacts where candidate_id=${id}`);
-    var work_experiences=await db.executrquery(`select company_name,work_designation,from_date,to_date from work_experiences2 where candidate_id=${id}`);
+    let reference_contacts=await db.executrquery(`select name,contact,relation from reference_contacts where candidate_id=${id}`);
+    let work_experiences=await db.executrquery(`select company_name,work_designation,from_date,to_date from work_experiences2 where candidate_id=${id}`);
     
     
     
-    var obj={
+    let obj={
         candidate_masters:candidate_masters.length<=0?null:candidate_masters,
         education_details:education_details.length<=0?null:education_details,
         languages:languages.length<=0?null:languages,
@@ -232,24 +250,36 @@ const getDataId=(async(req,res)=>{
         work_experiences:work_experiences.length<=0?null:work_experiences,
     }
     res.send(obj)
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 const getUpdateId=((req,res)=>{
-    var id=req.params.id 
+    try{
+    let id=req.params.id 
     // console.log(id)
     res.render('ajax-insert-update-form/form.ejs',{id:id}); 
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 const postUpdateId=(async(req,response)=>{
-    var data=req.body;
-    var  keys=Object.keys(data)
+    try{
+    let data=req.body;
+    let  keys=Object.keys(data)
     keys.forEach(key=>{
         if(data[key].length==0)
         {
             data[key]=null;
         }
     })
-    var arr=["course","board","passing_year","percentage","compny_name","work_designation","from_date","to_date","name","contact","relation"]
+    let arr=["course","board","passing_year","percentage","compny_name","work_designation","from_date","to_date","name","contact","relation"]
     arr.forEach(key=>{
         if(typeof(data[key])=="string")
         {
@@ -257,7 +287,7 @@ const postUpdateId=(async(req,response)=>{
         }
     })
     console.log(data)
-    var db=new database(process.env.database);
+    let db=new database(process.env.database);
    
 
     obj={
@@ -278,16 +308,16 @@ const postUpdateId=(async(req,response)=>{
             current_ctc:data.current_ctc!=""?data.current_ctc:0,
             department:data.department
         }
-    var res=await db.update(obj,"candidate_masters",{id:data.canid})
+    let res=await db.update(obj,"candidate_masters",{id:data.canid})
     
-    var result=await db.executrquery(`select id,candidate_id,course,board,passing_year,percentage from 
+    let result=await db.executrquery(`select id,candidate_id,course,board,passing_year,percentage from 
     education_details where candidate_id=${data.canid}`);
-    var result1=result;
+    let result1=result;
     
-    for(var i=0;i<data.course.length;i++)
+    for(let i=0;i<data.course.length;i++)
     {
-        var flag=false;
-        for(var j=0;j<result.length;j++)
+        let flag=false;
+        for(let j=0;j<result.length;j++)
         {
             if(data.course[i]==result[j]["course"])
             {
@@ -296,7 +326,7 @@ const postUpdateId=(async(req,response)=>{
         }
         if(flag==true)
         {
-            var result=await db.update({
+            let result=await db.update({
                 course:data.course[i],
                 board:data.board[i],
                 passing_year:data.passing_year[i],
@@ -304,7 +334,7 @@ const postUpdateId=(async(req,response)=>{
             },"education_details",{candidate_id:data.canid,course:data.course[i]})
             if(result.affectedRows==0)
             {
-                var result=await db.insertdata({
+                let result=await db.insertdata({
                     candidate_id:data.canid,
                     course:data.course[i],
                     board:data.board[i],
@@ -315,9 +345,9 @@ const postUpdateId=(async(req,response)=>{
         }
         else
         {
-            var result=await db.delete("education_details",{candidate_id:data.canid,course:data.course[i]});
+            let result=await db.delete("education_details",{candidate_id:data.canid,course:data.course[i]});
             console.log("yes")
-                var result=await db.insertdata({
+                result=await db.insertdata({
                     candidate_id:data.canid,
                     course:data.course[i],
                     board:data.board[i],
@@ -327,20 +357,20 @@ const postUpdateId=(async(req,response)=>{
         }
     }
     // console.log(data.course.length,result.length)
-    for(var i=data.course.length;i<result1.length;i++)
+    for(let i=data.course.length;i<result1.length;i++)
     {
-        var result=await db.delete("education_details",{candidate_id:data.canid,course:result1[i].course});
+        let result=await db.delete("education_details",{candidate_id:data.canid,course:result1[i].course});
     }
 
     // ---------------------------work ------------------
 
-    var result=await db.executrquery(`select * from work_experiences2 where candidate_id=${data.canid}`);
-    var result1=result;
+    result=await db.executrquery(`select * from work_experiences2 where candidate_id=${data.canid}`);
+    result1=result;
     
-    for(var i=0;i<data.company_name.length;i++)
+    for(let i=0;i<data.company_name.length;i++)
     {
-        var flag=false;
-        for(var j=0;j<result.length;j++)
+        let flag=false;
+        for(let j=0;j<result.length;j++)
         {
             if(data.name[i]==result[j]["company_name"])
             {
@@ -349,7 +379,7 @@ const postUpdateId=(async(req,response)=>{
         }
         if(flag==true)
         {
-            var result=await db.update({
+            let result=await db.update({
                 company_name:data.company_name[i],
                 work_designation:data.work_designation[i],
                 from_date:data.from_date[i],
@@ -357,7 +387,7 @@ const postUpdateId=(async(req,response)=>{
             },"work_experiences2",{candidate_id:data.canid,company_name:data.company_name[i]})
             if(result.affectedRows==0)
             {
-                var result=await db.insertdata({
+                let result=await db.insertdata({
                     candidate_id:data.canid,
                     company_name:data.company_name[i],
                     work_designation:data.work_designation[i],
@@ -368,9 +398,9 @@ const postUpdateId=(async(req,response)=>{
         }
         else
         {
-            var result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:data.company_name[i]});
+            let result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:data.company_name[i]});
             // console.log("yes")
-                var result=await db.insertdata({
+                result=await db.insertdata({
                     candidate_id:data.canid,
                     company_name:data.company_name[i],
                     work_designation:data.work_designation[i],
@@ -379,19 +409,19 @@ const postUpdateId=(async(req,response)=>{
                 },"work_experiences2")
         }
     }
-    for(var i=data.name.length;i<result1.length;i++)
+    for(let i=data.name.length;i<result1.length;i++)
     {
-        var result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:result1[i].name});
+        let result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:result1[i].name});
     }
 
     // -------------------- references --------------------
-    var result=await db.executrquery(`select * from reference_contacts where candidate_id=${data.canid}`);
-    var result1=result;
+    result=await db.executrquery(`select * from reference_contacts where candidate_id=${data.canid}`);
+    result1=result;
     
-    for(var i=0;i<data.name.length;i++)
+    for(let i=0;i<data.name.length;i++)
     {
-        var flag=false;
-        for(var j=0;j<result.length;j++)
+        let flag=false;
+        for(let j=0;j<result.length;j++)
         {
             if(data.name[i]==result[j]["name"])
             {
@@ -400,14 +430,14 @@ const postUpdateId=(async(req,response)=>{
         }
         if(flag==true)
         {
-            var result=await db.update({
+            let result=await db.update({
                 name:data.name[i],
                 contact:data.contact[i],
                 relation:data.relation[i],
             },"reference_contacts",{candidate_id:data.canid,name:data.name[i]})
             if(result.affectedRows==0)
             {
-                var result=await db.insertdata({
+                let result=await db.insertdata({
                     candidate_id:data.canid,
                     name:data.name[i],
                     contact:data.contact[i],
@@ -417,9 +447,9 @@ const postUpdateId=(async(req,response)=>{
         }
         else
         {
-            var result=await db.delete("reference_contacts",{candidate_id:data.canid,name:data.name[i]});
+            let result=await db.delete("reference_contacts",{candidate_id:data.canid,name:data.name[i]});
             // console.log("yes")
-                var result=await db.insertdata({
+                result=await db.insertdata({
                     candidate_id:data.canid,
                     name:data.name[i],
                     contact:data.contact[i],
@@ -427,16 +457,16 @@ const postUpdateId=(async(req,response)=>{
                 },"reference_contacts")
         }
     }
-    for(var i=data.name.length;i<result1.length;i++)
+    for(let i=data.name.length;i<result1.length;i++)
     {
-        var result=await db.delete("reference_contacts",{candidate_id:data.canid,name:result1[i].name});
+        let result=await db.delete("reference_contacts",{candidate_id:data.canid,name:result1[i].name});
     }
 
 
     // languages
 
-    var arr=["hindi","english","gujrati"]
-    var language=[]
+    arr=["hindi","english","gujrati"]
+    let language=[]
     arr.forEach(key =>{
         if(data[key]!=undefined)
         {
@@ -446,13 +476,13 @@ const postUpdateId=(async(req,response)=>{
         }        
     })
     console.log(data,language)
-    var result=await db.executrquery(`select * from languages where candidate_id=${data.canid}`);
-    var result1=result;
+    result=await db.executrquery(`select * from languages where candidate_id=${data.canid}`);
+    result1=result;
     
-    for(var i=0;i<language.length;i++)
+    for(let i=0;i<language.length;i++)
     {
-        var flag=false;
-        for(var j=0;j<result.length;j++)
+        let flag=false;
+        for(let j=0;j<result.length;j++)
         {
             if(language[i]==result[j]["language"])
             {
@@ -461,13 +491,13 @@ const postUpdateId=(async(req,response)=>{
         }
         if(flag==true)
         {
-            var result=await db.update({
+            let result=await db.update({
                 language:language[i],
                 language_lvl:data[language[i]]
             },"languages",{candidate_id:data.canid,language:language[i]})
             if(result.affectedRows==0)
             {
-                var result=await db.insertdata({
+                let result=await db.insertdata({
                     candidate_id:data.canid,
                     language:language[i],
                     language_lvl:data[language[i]],
@@ -476,23 +506,23 @@ const postUpdateId=(async(req,response)=>{
         }
         else
         {
-            var result=await db.delete("languages",{candidate_id:data.canid,language:language[i]});
+            let result=await db.delete("languages",{candidate_id:data.canid,language:language[i]});
             // console.log("yes")
-                var result=await db.insertdata({
+                result=await db.insertdata({
                     candidate_id:data.canid,
                     language:language[i],
                     language_lvl:data[language[i]],
                 },"languages")
         }
     }
-    for(var i=language.length;i<result1.length;i++)
+    for(let i=language.length;i<result1.length;i++)
     {
-        var result=await db.delete("languages",{candidate_id:data.canid,language:result1[i]["language"]});
+        let result=await db.delete("languages",{candidate_id:data.canid,language:result1[i]["language"]});
     }
     
     // ----------------technologies-------------------//
-    var arr=["php","laravel","oracle","mysql"]
-    var tech=[]
+    arr=["php","laravel","oracle","mysql"]
+    let tech=[]
     arr.forEach(key =>{
         if(data[key]!=undefined)
         {
@@ -502,13 +532,13 @@ const postUpdateId=(async(req,response)=>{
         }        
     })
     // console.log(data,language)
-    var result=await db.executrquery(`select * from technologies where candidate_id=${data.canid}`);
-    var result1=result;
+    result=await db.executrquery(`select * from technologies where candidate_id=${data.canid}`);
+    result1=result;
     
-    for(var i=0;i<tech.length;i++)
+    for(let i=0;i<tech.length;i++)
     {
-        var flag=false;
-        for(var j=0;j<result.length;j++)
+        let flag=false;
+        for(let j=0;j<result.length;j++)
         {
             if(tech[i]==result[j]["technology"])
             {
@@ -517,13 +547,13 @@ const postUpdateId=(async(req,response)=>{
         }
         if(flag==true)
         {
-            var result=await db.update({
+            let result=await db.update({
                 technology:tech[i],
                 technology_lvl:data[tech[i]]
             },"technologies",{candidate_id:data.canid,technology:tech[i]})
             if(result.affectedRows==0)
             {
-                var result=await db.insertdata({
+                let result=await db.insertdata({
                     candidate_id:data.canid,
                     technology:tech[i],
                 technology_lvl:data[tech[i]],
@@ -532,18 +562,23 @@ const postUpdateId=(async(req,response)=>{
         }
         else
         {
-            var result=await db.delete("technologies",{candidate_id:data.canid,technology:tech[i]});
+            let result=await db.delete("technologies",{candidate_id:data.canid,technology:tech[i]});
             // console.log("yes")
-                var result=await db.insertdata({
+                 result=await db.insertdata({
                     candidate_id:data.canid,
                     technology:tech[i],
                     technology_lvl:data[tech[i]],
                 },"technologies")
         }
     }
-    for(var i=tech.length;i<result1.length;i++)
+    for(let i=tech.length;i<result1.length;i++)
     {
-        var result=await db.delete("technologies",{candidate_id:data.canid,language:result1[i]["technology"]});
+        let result=await db.delete("technologies",{candidate_id:data.canid,language:result1[i]["technology"]});
+    }
+}
+    catch(e)
+    {
+        res.send(e)
     }
 })
 

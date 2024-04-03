@@ -7,22 +7,40 @@ const getDemo=((req,res)=>{
     res.render('city-state-combo/demo.ejs')
 })
 const getState=(async(req,res)=>{
-    var obj=new database(process.env.database);
-    var ans=await obj.executrquery('select * from states');
+    try{
+    let obj=new database(process.env.database);
+    let ans=await obj.executrquery('select * from states');
     console.log(ans)
     res.send(ans);
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 const getCity=(async(req,res)=>{
-    var obj=new database(process.env.database);
-    var ans=await obj.executrquery('select * from cities');
+    try{
+
+    let obj=new database(process.env.database);
+    let ans=await obj.executrquery('select * from cities');
     res.send(ans);
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 const getCityId=(async(req,res)=>{
-    
-    var obj=new database(process.env.database);
-    var ans=await obj.executrquery(`select * from cities where state_id=${req.params.id}`);
+    try{
+    let obj=new database(process.env.database);
+    let ans=await obj.executrquery(`select * from cities where state_id=${req.params.id}`);
     res.send(ans);
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 module.exports={getDemo,getState,getCity,getCityId}

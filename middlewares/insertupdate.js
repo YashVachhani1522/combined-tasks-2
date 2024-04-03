@@ -2,7 +2,7 @@ const { fileLoader } = require("ejs");
 
 
 const required=(data,arr)=>{
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
         if(data[arr[i]]=="")
         {
@@ -13,7 +13,7 @@ const required=(data,arr)=>{
 }
 const checkednum=(arr,data)=>{
     
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
         if(!isNaN(Number(data[arr[i]])))
         {
@@ -23,7 +23,7 @@ const checkednum=(arr,data)=>{
     return true;
 }
 const arrayreqvalid=(obj1,data)=>{
-    for(var i=0;i<obj1.length;i++)
+    for(let i=0;i<obj1.length;i++)
     {
         console.log(obj1.length);
         let obj=obj1[i];
@@ -31,7 +31,7 @@ const arrayreqvalid=(obj1,data)=>{
         let inputs=data[obj.name];
         // console.log(inputs, obj.name)
         if(inputs !=undefined){
-        for(var j=0;j<inputs.length;j++)
+        for(let j=0;j<inputs.length;j++)
         {
             // console.log(inputs[j])
                 if(inputs[j]!="")
@@ -65,7 +65,7 @@ const rg=(id,type,data)=>{
     let DATE =new RegExp(/\d{4}-\d{2}-\d{2}/)
     let YEAR=new RegExp(/(?:(?:19|20)[0-9]{2})/)
     let PER=new RegExp(/(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/)
-    var EMAIL= new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+    let EMAIL= new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
 
     switch(type)
     {
@@ -108,14 +108,14 @@ const serverside=((req,res,next)=>{
     data=req.body;
     console.log(data);    
 
-    var fields=Object.keys(req.body);
+    let fields=Object.keys(req.body);
     console.log(fields);    
 
-    var ids=['firstname','lastname','designation','address1','email','address2','p_number','city','state','zipcode','gender','relation_op','dob','ectc','cctc','dept'];
+    let ids=['firstname','lastname','designation','address1','email','address2','p_number','city','state','zipcode','gender','relation_op','dob','ectc','cctc','dept'];
     if(required(data,ids)==true)
     {
-        var arr2=['firstname','lastname','designation','address1','address2','city'];
-        var res2=checkednum(arr2,data)
+        let arr2=['firstname','lastname','designation','address1','address2','city'];
+        let res2=checkednum(arr2,data)
         // console.log(res2);
         if(res2!=true)
         {
@@ -137,7 +137,7 @@ const serverside=((req,res,next)=>{
             res.render('form2.ejs',{err:'Date of Birth'})
         }
 
-        var obj=[
+        let obj=[
             {
             name:'pg',
             label:'PG',
@@ -222,7 +222,7 @@ const serverside=((req,res,next)=>{
         }
         ]  
 
-        var ans=arrayreqvalid(obj,data);
+        let ans=arrayreqvalid(obj,data);
         if(ans.flag==true)
         {
             data=ans.data;

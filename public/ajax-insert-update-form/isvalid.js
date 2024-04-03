@@ -1,5 +1,5 @@
 const req=(arr)=>{
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
         if(document.getElementById(arr[i]).value=="")
         {
@@ -10,7 +10,7 @@ const req=(arr)=>{
 }
 const checkednum=(arr)=>{
     
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
         if(!isNaN(Number(document.getElementById(arr[i]).value)))
         {
@@ -20,13 +20,11 @@ const checkednum=(arr)=>{
     return true;
 }
 const checkdynemicbox=(arr)=>{
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    console.log(arr)
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
-        var obj=arr[i];
-        console.log(obj)
-        var result=[];
+        let obj=arr[i];
+        // console.log(obj)
+        let result=[];
         obj.data.forEach(element =>{
                 element=document.getElementsByName(element);
                 let row=[]
@@ -38,8 +36,6 @@ const checkdynemicbox=(arr)=>{
                 })
                 result.push(row);
         })
-        console.log("mmMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmm")
-        console.log(result)
         let size=result[0].length;
         for(let i=0;i<result.length;i++)
         {
@@ -57,7 +53,7 @@ const rg=(id,type)=>{
     let DATE =/\d{4}-\d{2}-\d{2}/
     let YEAR=/(?:(?:19|20)[0-9]{2})/;
     let PER=/(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
-    var EMAIL= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let EMAIL= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
     switch(type)
     {
@@ -95,13 +91,13 @@ const rg=(id,type)=>{
     return true;
 }
 const arrayreqvalid=(arr)=>{
-    for(var i=0;i<arr.length;i++)
+    for(let i=0;i<arr.length;i++)
     {
         let obj=arr[i];
         let count=0;
         let inputs=document.getElementsByName(obj.name);
 
-        for(var j=0;j<inputs.length;j++)
+        for(let j=0;j<inputs.length;j++)
         {
 
             if(obj.type=='text')
@@ -144,12 +140,12 @@ const arrayreqvalid=(arr)=>{
 
 const isvalid_baisicdetails=(container)=>
 {
-    var arr=['first_name','last_name','designation','email','phone_no','birthdate','city','address1','address2']
-    var ans=req(arr)
+    let arr=['first_name','last_name','designation','email','phone_no','birthdate','city','address1','address2']
+    let ans=req(arr)
     if(ans==true)
     {
-        var checknum=['first_name','last_name','designation','address1','address2','city']
-        var checksumans=checkednum(checknum);
+        let checknum=['first_name','last_name','designation','address1','address2','city']
+        let checksumans=checkednum(checknum);
         if(checksumans!=true)
         {
             document.getElementById('print-err').style.display='block';
@@ -195,7 +191,7 @@ const isvalid_baisicdetails=(container)=>
 }
 
 const isvalid_education=(container)=>{
-    var obj=[{
+    let obj=[{
         label:'education',
         data:['course','board','passing_year','percentage'],
         required:false
@@ -208,7 +204,7 @@ const isvalid_education=(container)=>{
     }   
 }
 const isvalid_work=(container)=>{
-    var obj=[{
+    let obj=[{
         label:'work',
         data:['company_name','work_designation','from_date','to_date'],
         required:false
@@ -223,7 +219,7 @@ const isvalid_work=(container)=>{
     }   
 }
 const isvalid_ref=()=>{
-    var obj=[{
+    let obj=[{
         label:'Refrences',
         data:['name','contact','relation'],
         required:false
@@ -237,7 +233,7 @@ const isvalid_ref=()=>{
 }
 const isvalid_language=()=>{
 
-  var obj=[
+    let obj=[
     {
         name:'hindi',
         label:'HINDI',
@@ -259,7 +255,7 @@ const isvalid_language=()=>{
         type:'select',
         size:'2'
     },]
-    var obj2=arrayreqvalid(obj);
+    let obj2=arrayreqvalid(obj);
     if(arrayreqvalid(obj)!=true)
     {
         document.getElementById('print-err').style.display='block';
@@ -295,7 +291,7 @@ const isvalid_tech=()=>{
             size:'2'
         },
     ]
-    var obj2=arrayreqvalid(obj);
+    let obj2=arrayreqvalid(obj);
     if(arrayreqvalid(obj)!=true)
     {
         document.getElementById('print-err').style.display='block';
@@ -304,8 +300,8 @@ const isvalid_tech=()=>{
     }
 }
 const isvalid_last=()=>{
-    var arr=['prefered_location','expected_ctc','department']
-    var ans=req(arr)
+    let arr=['prefered_location','expected_ctc','department']
+    let ans=req(arr)
     if(ans!=true)
     {
         document.getElementById('print-err').style.display='block';

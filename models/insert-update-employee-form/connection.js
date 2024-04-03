@@ -7,10 +7,10 @@ class connection{
     constructor(db)
     {
         this.con=mysql.createConnection({
-            user:"root",
-            host:"localhost",
-            password:"",
-            database:db,
+            user:process.env.user,
+            host:process.env.host,
+            password:process.env.password,
+            database:process.env.database,
             dateStrings:true
         })
        
@@ -64,7 +64,7 @@ class connection{
      }
 
      fatchdata2=async(table,id)=>{
-        var q=`select * from ${table} where can_id=${id}`;
+        let q=`select * from ${table} where can_id=${id}`;
         console.log(q);
         let result=  new Promise((resolve,reject)=>{
               this.con.query(q,(err,result)=>{
@@ -87,9 +87,9 @@ class connection{
        }
 
     createquery=async(table,data)=>{
-        var fields=Object.keys(data);
+        let fields=Object.keys(data);
         console.log("hsshh")
-        var query=`insert into ${table}(`
+        let query=`insert into ${table}(`
             fields.forEach(key=>{
                 query+=`${key},`
             })
@@ -107,15 +107,15 @@ class connection{
     }
 
     update=async(table,data,conditions)=>{
-        var q=`update ${table} set `;
-        var keys=typeof Object.keys(data)=="string"?[Object.keys(data)]:Object.keys(data);
+        let q=`update ${table} set `;
+        let keys=typeof Object.keys(data)=="string"?[Object.keys(data)]:Object.keys(data);
 
         keys.forEach(key=>{
             q+= `${key} = '${data[key]}',`
         })
             q=q.slice(0,q.length-1)+' where ';
 
-        var keys=typeof Object.keys(conditions)=='string'?[Object.keys(conditions)]:Object.keys(conditions);
+        keys=typeof Object.keys(conditions)=='string'?[Object.keys(conditions)]:Object.keys(conditions);
         keys.forEach(key=>{
             q+= `${key} = '${conditions[key]}' and ` 
         })
@@ -124,8 +124,8 @@ class connection{
         return await this.fatchdata(q);
     }
     delete=async(table,conditions)=>{
-        var q=`delete from ${table} where `
-        var keys=typeof Object.keys(conditions)=='string'?[Object.keys(conditions)]:Object.keys(conditions);
+        let q=`delete from ${table} where `
+        let keys=typeof Object.keys(conditions)=='string'?[Object.keys(conditions)]:Object.keys(conditions);
         keys.forEach(key=>{
             q+= `${key} = '${conditions[key]}' and ` 
         })
@@ -134,6 +134,6 @@ class connection{
     }
 }
 
-// var obj=new connection('job_ap_dob_29')
+// let obj=new connection('job_ap_dob_29')
 //     obj.delete('yes',{can_id:1,edu_id:2})
 module.exports=connection;

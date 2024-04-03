@@ -1,5 +1,5 @@
 const express = require('express');
-const getTimeZone = require('../../controllers/time-zone/time-zone');
+const getTimeZone = require('../controllers/time-zone/time-zone');
 const timezone = express.Router();
 
 

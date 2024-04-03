@@ -1,8 +1,8 @@
 const valueprint=(obj)=>
 {   
     // console.log(obj)
-    var key=Object.keys(obj)
-    var nodes=key.map(ele=>
+    let key=Object.keys(obj)
+    let nodes=key.map(ele=>
         document.getElementsByName(ele)[0]
     )
     // console.log(nodes)
@@ -38,9 +38,9 @@ const valueprint=(obj)=>
     })
 }
 const radio=(obj)=>{
-        var key=Object.keys(obj)
+        let key=Object.keys(obj)
         // console.log(key)
-        var nodes=key.map(ele=>document.getElementsByName(ele)
+        let nodes=key.map(ele=>document.getElementsByName(ele)
             )
             // console.log(nodes)
             nodes[0].forEach((node)=>{
@@ -55,8 +55,8 @@ const radio=(obj)=>{
 }
 const update=(data)=>{
     console.log(data.refcon);
-    var baisic_details=data.baisic_details[0];
-    var obj={
+    let baisic_details=data.baisic_details[0];
+    let obj={
         canid:baisic_details.can_id,
         firstname:baisic_details.fname,
         lastname:baisic_details.lname,
@@ -72,16 +72,16 @@ const update=(data)=>{
         relationop:baisic_details.relationship_status,
     }
     valueprint(obj);
-    var obj2={
+    let obj2={
         gender:baisic_details.gender,
     }
     radio(obj2);
-    // var education=data.education[0];
+    // let education=data.education[0];
     if(data.education!=null)
     {   
         arr=['ssc','hsc'];
-        var nodes=arr.map(ele =>document.getElementsByName(ele))
-        for(var i=0;i<nodes.length;i++)
+        let nodes=arr.map(ele =>document.getElementsByName(ele))
+        for(let i=0;i<nodes.length;i++)
         {
             if(data.education[i])
             {
@@ -92,8 +92,8 @@ const update=(data)=>{
                    
         }
         
-            var arr2=['ug','pg']
-            var nodes2=arr2.map(ele =>document.getElementsByName(ele))
+            let arr2=['ug','pg']
+            let nodes2=arr2.map(ele =>document.getElementsByName(ele))
     
             if(data.education[2])
             {
@@ -116,9 +116,9 @@ const update=(data)=>{
    
        if(data.work!=null)
        {    
-        var arr3=['work1','work2','work3'];
-        var nodes3=arr3.map(ele =>document.getElementsByName(ele))
-        for(var i=0;i<nodes3.length;i++)
+        let arr3=['work1','work2','work3'];
+        let nodes3=arr3.map(ele =>document.getElementsByName(ele))
+        for(let i=0;i<nodes3.length;i++)
         {
             if(data.work[i])
             {
@@ -134,10 +134,10 @@ const update=(data)=>{
 
         if(data.ref!=null)
         {
-                    var arr5=['pre1','pre2'];
-            var nodes5=arr5.map(ele =>document.getElementsByName(ele))
+            let arr5=['pre1','pre2'];
+            let nodes5=arr5.map(ele =>document.getElementsByName(ele))
             console.log(nodes5)
-            for(var i=0;i<nodes5.length;i++)
+            for(let i=0;i<nodes5.length;i++)
             {
                 if(data.ref[i])
                 {
@@ -153,7 +153,7 @@ const update=(data)=>{
     
     if(data.refcon!=null)
     {
-        var ob={
+        let ob={
             preloc:data.refcon[0].prefered_location,
             np:data.refcon[0].notice_periods,
             cctc:data.refcon[0].expected_ctc,
@@ -164,11 +164,11 @@ const update=(data)=>{
     }
     if(data.language!=null)
     {
-        for(var i=0;i<data.language.length;i++)
+        for(let i=0;i<data.language.length;i++)
         {
             if(data.language[i].languages)
             {
-                var nodes=document.getElementsByName(data.language[i].languages);
+                let nodes=document.getElementsByName(data.language[i].languages);
                 nodes[0].checked=true
                 if(data.language[i].reading!='null')
                 {
@@ -187,9 +187,9 @@ const update=(data)=>{
     }   
     if(data.tech!=null)
     {
-        for(var i=0;i<data.tech.length;i++)
+        for(let i=0;i<data.tech.length;i++)
         {
-            var nodes=document.getElementsByName(data.tech[i].technologies_name);
+            let nodes=document.getElementsByName(data.tech[i].technologies_name);
             nodes[0].checked=true
             
             if(data.tech[i].leveles=='b')

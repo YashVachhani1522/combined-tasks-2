@@ -1,5 +1,5 @@
 const express = require('express');
-const { getmain, getPostId1 } = require("../../controllers/json-placeholder/json");
+const { getmain, getPostId1 } = require("../controllers/json-placeholder/json");
 const jsonapi = express.Router();
 
 

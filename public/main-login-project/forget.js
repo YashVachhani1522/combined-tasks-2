@@ -5,7 +5,7 @@ const forgeteer=async()=>{
                 document.getElementById('forget').nextSibling.remove()
             }
             nodes=document.getElementById("forget");
-            var p=document.createElement('p');
+            let p=document.createElement('p');
             p.className='text-danger'
             p.innerHTML="please enter email or password";
             nodes.insertAdjacentElement("afterend", p);
@@ -17,9 +17,9 @@ const forgeteer=async()=>{
             document.getElementById('forget').nextSibling.remove()
         }
         const form=document.getElementById('form_fr')
-        var data=new URLSearchParams(new FormData(form))
-        var url=`http://localhost:8000/main-login-project/forget`
-        var res=await fetch(url,{
+        let data=new URLSearchParams(new FormData(form))
+        let url=`http://localhost:8000/main-login-project/forget`
+        let res=await fetch(url,{
             method:'POST',
             body:data,
             headers:{

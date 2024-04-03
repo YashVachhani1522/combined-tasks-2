@@ -1,49 +1,49 @@
 const viewapidata=(tblid,data,hidetbl)=>{
-    var tbl=tblid;
-    var tbl_id=document.getElementById(tbl);
-    var data=data;
+    let tbl=tblid;
+    let tbl_id=document.getElementById(tbl);
+    let data=data;
     // console.log(data);
 
 
-// var fields=['id','slug','title','category','view details'];
+// let fields=['id','slug','title','category','view details'];
 
-    var fields=Object.keys(data);  
+    let fields=Object.keys(data);  
 
     // console.log(fields);          
     tbl_id.innerHTML="";
 
-    for(var i=0;i<fields.length;i++)
+    for(let i=0;i<fields.length;i++)
     {
-        var tr=document.createElement('tr');
-        var td=document.createElement('td');
+        let tr=document.createElement('tr');
+        let td=document.createElement('td');
         td.innerHTML=fields[i];
         tr.appendChild(td);
         if(fields[i]=='image')
         {
-            var td=document.createElement('td')
+            let td=document.createElement('td')
             td.innerHTML=`<img src='${data[fields[i]]}' height='100px'>`
             tr.appendChild(td);
         }
         else if(fields[i]=='thumbnail')
         {
-            var td=document.createElement('td')
+            let td=document.createElement('td')
             td.innerHTML=`<img src='${data[fields[i]]}' height='100px'>`
             tr.appendChild(td);
 
         }
         else
         {
-            var td=document.createElement('td');
+            let td=document.createElement('td');
             td.innerHTML=data[fields[i]]
             tr.appendChild(td);
         }          
         tbl2.appendChild(tr);
         
     }
-        var tr2=document.createElement('tr');
-        var td2=document.createElement('td');
-        var btn2=document.createElement('button');
-        var print2=document.createTextNode('view comments');
+        let tr2=document.createElement('tr');
+        let td2=document.createElement('td');
+        let btn2=document.createElement('button');
+        let print2=document.createTextNode('view comments');
         btn2.setAttribute('onclick',`toggle(${data.id},'${hidetbl}')`);
         btn2.appendChild(print2);
         td2.appendChild(btn2);
@@ -60,12 +60,12 @@ if(document.getElementById(tblhideid).style.display=='none')
         document.getElementById(tblhideid).style.display='block';
         
         const fun2=async()=>{
-            var result=await fetch('https://jsonplaceholder.typicode.com/comments');
+            let result=await fetch('https://jsonplaceholder.typicode.com/comments');
             return await result.json();
         }
 
         fun2().then((data)=>{
-            var arr=[]
+            let arr=[]
             // console.log(data);
             data.forEach(element => {
                 if(element.postId==id)
@@ -73,18 +73,18 @@ if(document.getElementById(tblhideid).style.display=='none')
                     arr.push(element);
                 }
             });
-            var tbl3=document.getElementById('tbl3')
+            let tbl3=document.getElementById('tbl3')
             if(arr.length>0)
             {
-                var tr=document.createElement('tr');
-                var td=document.createElement('td');
+                let tr=document.createElement('tr');
+                let td=document.createElement('td');
                 td.innerHTML=`user id:${id}`;
                 tr.appendChild(td);
                 tbl3.appendChild(tr);
-                for(var i=0;i<arr.length;i++)
+                for(let i=0;i<arr.length;i++)
                 {
-                    var tr=document.createElement('tr');
-                    var td=document.createElement('td');
+                    let tr=document.createElement('tr');
+                    let td=document.createElement('td');
                     td.innerHTML=`comments :${arr[i].body}`;
                     tr.appendChild(td);
                     tbl3.appendChild(tr);

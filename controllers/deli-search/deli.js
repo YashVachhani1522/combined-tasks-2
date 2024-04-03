@@ -7,10 +7,8 @@ const database = require('../../models/ajax-insert-update-form/database');
 
 
 const getDeli=(async(req,res)=>{
-    var db=new database(process.env.database);
-
-
     try{
+    var db=new database(process.env.database);
             var con=async()=>
             {
                 var fire=await db.connect();
@@ -33,6 +31,8 @@ const getDeli=(async(req,res)=>{
 
 })
 const postDeli=(async(req,res)=>{
+    try{
+
     var str=req.body.query;
     var count=0;
     var obj=fun(str);
@@ -109,7 +109,11 @@ const postDeli=(async(req,res)=>{
 
         res.render("deli-search/page1.ejs",{data:false,fields:false,error:err});
         }
-
+    }
+    catch(e)
+    {
+        res.send(e)
+    }
 })
 
 

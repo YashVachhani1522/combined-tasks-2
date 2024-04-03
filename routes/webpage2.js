@@ -1,5 +1,5 @@
 const express = require('express');
-const getHtmlCss2 = require('../../controllers/html-css-2/2');
+const getHtmlCss2 = require('../controllers/html-css-2/2');
 const htmlcss2 = express.Router();
 
 

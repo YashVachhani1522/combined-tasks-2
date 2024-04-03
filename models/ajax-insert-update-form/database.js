@@ -12,14 +12,14 @@ class database{
     }
     connection()
     {
-        var con=mysql.createConnection({
+        let con=mysql.createConnection({
             user:this.user,
             host:this.host,
             password:this.password,
             database:this.database,
             dateStrings:true
         })
-        var res= new Promise((resolve,reject)=>{
+        let res= new Promise((resolve,reject)=>{
             con.connect((err)=>{
                 if(err)
                 {
@@ -32,7 +32,7 @@ class database{
             })
         })
         
-        var res=res.then(data=>{
+        res=res.then(data=>{
             return data
         }).catch(err=>{
             return err.sqlMessage; 
@@ -42,9 +42,9 @@ class database{
     
     executrquery=async(q)=>{
         console.log(q)
-        var con=await this.connection()
-        var res=new Promise((resolve,reject)=>{
-            var res=con.query(q,(err,result)=>{
+        let con=await this.connection()
+        let res=new Promise((resolve,reject)=>{
+            let res=con.query(q,(err,result)=>{
                 if(err)
                 {
                     reject(err)
@@ -55,7 +55,7 @@ class database{
                 }
             })
         })    
-        var res=res.then(data=>{
+        res=res.then(data=>{
             return(data)
         }).catch(err=>{
             return err.sqlMessage;
@@ -65,8 +65,8 @@ class database{
 
 
     fatchdata2=async(table,id)=>{
-        var con=await this.connection()
-        var q=`select * from ${table} where candidate_id=${id}`;
+        let con=await this.connection()
+        let q=`select * from ${table} where candidate_id=${id}`;
         console.log(q);
         let result=  new Promise((resolve,reject)=>{
               con.query(q,(err,result)=>{
@@ -89,8 +89,8 @@ class database{
        }
 
     insertdata=async(data,table)=>{
-        var keys=Object.keys(data);
-        var q=`insert into ${table}(`;
+        let keys=Object.keys(data);
+        let q=`insert into ${table}(`;
         keys.forEach(key => {
             q+=`${key},`
         });
@@ -104,7 +104,7 @@ class database{
     }
 
     update=async(data,table,conditions)=>{
-        var q=`update ${table} set `
+        let q=`update ${table} set `
         Object.keys(data).forEach(key=>{
             q+=`${key}='${data[key]}',`
         })
@@ -117,7 +117,7 @@ class database{
         return await this.executrquery(q);
     }
     update2=async(data,table,conditions)=>{
-        var q=`update ${table} set `
+        let q=`update ${table} set `
         Object.keys(data).forEach(key=>{
             if(data[key]==null)
             {
@@ -139,7 +139,7 @@ class database{
     
     
     delete=async(table,conditions)=>{
-        var q=`delete from ${table} where `
+        let q=`delete from ${table} where `
         Object.keys(conditions).forEach(key=>{
             q+=`${key}='${conditions[key]}' and `;
         })

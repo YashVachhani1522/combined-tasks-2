@@ -1,5 +1,6 @@
+
 const express = require('express');
-const getHtmlCss1 = require('../../controllers/html-css-1/1');
+const getHtmlCss1 = require('../controllers/html-css-1/1');
 const htmlcss1 = express.Router();
 
 
