@@ -1,5 +1,6 @@
 const express = require('express');
-const { getInsert, postInsert,getData, getUpdate, postUpdate, getbasicdetailsdata, display, getDelete } = require('../controllers/insert-update-employee-form/insertupdate');
+const { getInsert, postInsert,getData, getbasicdetailsdata, display, getDelete } = require('../controllers/insert-update-employee-form/insertupdate');
+const { getUpdate, postUpdate } = require('../controllers/insert-update-employee-form/updateGetPost');
 const simpleinsertupdate = express.Router();
 
 

@@ -165,7 +165,26 @@ const getDataActivation=(async(req,res)=>{
     }
 })
 const getLogin=((req,res)=>{
-    res.render("main-login-project/login.ejs")
+    console.log(req.cookies)
+    if(req.cookies.token!=undefined)
+    {
+        let token=req.cookies.token
+        const decode=jwt.verify(token,process.env.SECRET_KEY)
+        if(decode.id!="")
+        {
+            res.render('main-login-project/home.ejs')
+        }
+        else
+        {
+            res.render("main-login-project/login.ejs")
+        }
+    }
+    else
+    {
+        res.render("main-login-project/login.ejs")
+    }
+    // res.render("main-login-project/login.ejs")
+
 })
 
 const postLogin=(async(req,res)=>{
@@ -196,7 +215,7 @@ const postLogin=(async(req,res)=>{
                 process.env.SECRET_KEY,
                 {expiresIn:'1h'} 
             )
-            res.cookie('token',token).json({id:result[0].id,flag:true});
+            res.cookie('token',token,{maxAge:1000*60*60,httpOnly:true}).json({id:result[0].id,flag:true});
         }
         else
         {

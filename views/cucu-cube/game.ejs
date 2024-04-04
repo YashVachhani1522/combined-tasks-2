@@ -51,7 +51,7 @@
             var roundValue = Math.round, rndmValue = Math.random, maxNum = 255;
             return 'rgba(' + roundValue(rndmValue() * maxNum) + ',' + roundValue(rndmValue() * maxNum) + ',' + roundValue(rndmValue() * maxNum) + ')';
         }
-
+        let color2=0.1
         function color()
         {
             var tbl=document.getElementById("table-1");
@@ -60,15 +60,15 @@
             var num1=Math.floor((Math.random() * tbl.rows.length));
             var num2=Math.floor((Math.random() * tbl.rows[0].cells.length));
             
-    
-            
             for(var i=0;i<tbl.rows.length;i++)
             {
                 for(var j=0;j<tbl.rows[i].cells.length;j++)
                 {
                     if(i==num1 && j==num2)
                     {
-                        tbl.rows[i].cells[j].style.backgroundColor=color.replace(")",", 0.5)");
+                        color2+=0.1;
+                        tbl.rows[i].cells[j].style.backgroundColor=color.replace(")",`, ${color2})`);
+                        
                     }
                     else
                     {

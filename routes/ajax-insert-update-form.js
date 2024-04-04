@@ -1,6 +1,7 @@
 const express = require('express');
-const { getForm, postForm, getData, getDeleteId, getDataId, getUpdateId, postUpdateId, getDisplay } = require('../controllers/ajax-insert-update-form/ajax');
+const { getForm, postForm, getData, getDeleteId, getDataId, getDisplay } = require('../controllers/ajax-insert-update-form/ajax');
 const checkToken = require('../middlewares/login-main-project');
+const { getUpdateId, postUpdateId } = require('../controllers/ajax-insert-update-form/updateGetPost');
 const ajaxform= express.Router();
 
 

@@ -40,11 +40,11 @@ class database{
         return res;
     }
     
-    executrquery=async(q)=>{
+    executrquery=async(q,arr)=>{
         console.log(q)
         let con=await this.connection()
         let res=new Promise((resolve,reject)=>{
-            let res=con.query(q,(err,result)=>{
+            let res=con.query(q,arr,(err,result)=>{
                 if(err)
                 {
                     reject(err)
@@ -95,56 +95,89 @@ class database{
             q+=`${key},`
         });
         q=q.slice(0,q.length-1)+')values(';
+        // console.log(q)
         keys.forEach(key=>{
-            q+=`'${data[key]}',`;   
+            q+="?,"
         })
-        q=q.slice(0,q.length-1)+');'
-        // console.log(q);
-        return await this.executrquery(q);
+        q=q.slice(0,q.length-1)+")"
+        let arr=[]
+        keys.forEach(key=>{
+            arr.push(`${data[key]}`);   
+        })
+        // q=q.slice(0,q.length-1)+');'
+        console.log(arr);
+        return await this.executrquery(q,arr);
     }
 
     update=async(data,table,conditions)=>{
         let q=`update ${table} set `
         Object.keys(data).forEach(key=>{
-            q+=`${key}='${data[key]}',`
+            q+=`${key}=?,`
         })
-        q=q.slice(0,q.length-1)+' where ';
+        q=q.slice(0,q.length-1)
+        
+        q=q.slice(0,q.length)+' where ';
         Object.keys(conditions).forEach(key=>{
-            q+=`${key}='${conditions[key]}' and `;
+            q+=`${key}=?`;
+            q+=" and "
         })
-        q=q.slice(0,q.length-5)+`;`
+        let arr=[]
+        q=q.slice(0,q.length-4)+`;`
+
+        Object.keys(data).forEach(key=>{
+            arr.push(`${data[key]}`)
+        })
+        Object.keys(conditions).forEach(key=>{
+            arr.push(`${conditions[key]}`)
+        })
+        console.log(arr)
         console.log(q)
-        return await this.executrquery(q);
+        
+        return await this.executrquery(q,arr);
     }
+
     update2=async(data,table,conditions)=>{
         let q=`update ${table} set `
         Object.keys(data).forEach(key=>{
-            if(data[key]==null)
-            {
-                q+=`${key}=${data[key]},`
-            }
-            else
-            {
-                q+=`${key}='${data[key]}',`
-            }
+            q+=`${key}=?,`
         })
-        q=q.slice(0,q.length-1)+' where ';
+        q=q.slice(0,q.length-1)
+        
+        q=q.slice(0,q.length)+' where ';
         Object.keys(conditions).forEach(key=>{
-            q+=`${key}='${conditions[key]}' or `;
+            q+=`${key}=?`;
+            q+=" and "
         })
+        let arr=[]
         q=q.slice(0,q.length-4)+`;`
+
+        Object.keys(data).forEach(key=>{
+            arr.push(`${data[key]}`)
+        })
+        Object.keys(conditions).forEach(key=>{
+            arr.push(`${conditions[key]}`)
+        })
+        console.log(arr)
         console.log(q)
-        return await this.executrquery(q);
+        return await this.executrquery(q,arr);
     }
     
     
     delete=async(table,conditions)=>{
+        let arr=[]
         let q=`delete from ${table} where `
         Object.keys(conditions).forEach(key=>{
-            q+=`${key}='${conditions[key]}' and `;
+            q+=`${key}=? `;
+            q+="and "
         })
         q=q.slice(0,q.length-5)+';'
-        return await this.executrquery(q,arr);
+        console.log(q)
+        Object.keys(conditions).forEach(key=>{
+            arr.push(`${conditions[key]}`)
+        })
+        console.log(arr.length)
+        return await this.executrquery(q);
     }
 }
-module.exports=database;
+let db=new database("combinedtasks")
+db.delete("student",{id:10,phoneno:"8866081331"});
