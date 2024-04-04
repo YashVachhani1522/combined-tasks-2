@@ -72,9 +72,10 @@
                 
                 // window.location.reload()   
                     var arr=await data.filter((ele)=>{
+                console.log(ele)
                 console.log(search.value);
                 return(
-                    ele.id==search.value || ele.title.includes(search.value) ||ele.content.includes(search.value)
+                    ele.id==search.value || ele.userId==search.value ||ele.title.includes(search.value)
                 )   
                 })
 

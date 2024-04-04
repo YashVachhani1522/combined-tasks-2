@@ -15,16 +15,21 @@ const getSearch=((req,res)=>{
     let email=req.query.email;
     let gender=req.query.gender;
     // let def=[]
-    console.log(op);
+    // console.log(op);
 
 
-    console.log();
+    // console.log();
     try{
             let data=async()=>
             {
                 let result;
-                if(onlyid!=undefined)
+                if((onlyid)=="")
                 {
+                    result=await db.executrquery("select * from stdatt_student_master");
+                }
+                else if(onlyid!=undefined)
+                {
+                    console.log("asjhdask")
                     result=await db.executrquery(`select * from stdatt_student_master where std_id=${onlyid}`);
                 }
                 else if(op=='and' && std_id!="" && first_name!="" && last_name!="" && contact!="" && email!="" && gender!="")
@@ -35,12 +40,12 @@ const getSearch=((req,res)=>{
                 {
                     result=await db.executrquery(`select * from stdatt_student_master where std_id="${std_id}" ${op} first_name="${first_name}" ${op} last_name="${last_name}" ${op} contact="${contact}" ${op} email="${email}" ${op} gender="${gender}";`)
                 }
-                
                 else
                 {
                     result=await db.executrquery("select * from stdatt_student_master");
                 }
                 let arr=Object.keys(result[0])
+                console.log(result[0])
                 res.render("perticular-search-and-or/page1.ejs",{data:result,fields:arr,error:false});
             }
             data();

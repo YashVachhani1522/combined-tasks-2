@@ -9,10 +9,10 @@ const database = require('../../models/ajax-insert-update-form/database');
 const getDeli=(async(req,res)=>{
     try{
     var db=new database(process.env.database);
-            var con=async()=>
-            {
-                var fire=await db.connect();
-            }
+            // var con=async()=>
+            // {
+            //     var fire=await db.connect();
+            // }
     
             var data=async()=>
             {
@@ -97,10 +97,29 @@ const postDeli=(async(req,res)=>{
     try{
             var data=async()=>
             {
-
-                var result2=await db.executrquery(q);
-                var arr2=Object.keys(result2[0])
-                res.render("deli-search/page1.ejs",{data:result2,fields:arr2,error:false});
+                // var q2=("  jshagd kajshda alsdkhadn   ")
+                // console.log(q2)
+                // console.log("@@@@@@@@@@@@@@@@@@@@@")
+                // console.log(q)
+                if(q.replaceAll(" ","")!="select*fromstdatt_student_masterwhere")
+                {
+                    var result2=await db.executrquery(q);
+                    if(result2.length>0)
+                    {
+                        var arr2=Object.keys(result2[0])
+                        res.render("deli-search/page1.ejs",{data:result2,fields:arr2,error:false});
+                    }
+                    else
+                    {
+                        err="this type of data not avilable"
+                        res.render("deli-search/page1.ejs",{data:false,fields:false,error:err});
+                    }
+                }
+                else{
+                    var result=await db.executrquery("select * from stdatt_student_master");
+                    var arr=Object.keys(result[0])  
+                    res.render("deli-search/page1.ejs",{data:result,fields:arr,error:false});
+                }
             }
             data();
 

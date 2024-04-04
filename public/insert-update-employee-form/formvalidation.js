@@ -1,7 +1,7 @@
 const req=(arr)=>{
     for(let i=0;i<arr.length;i++)
     {
-        if(document.getElementById(arr[i]).value=="")
+        if(document.getElementById(arr[i]).value.trim()=="")
         {
             return arr[i]
         }

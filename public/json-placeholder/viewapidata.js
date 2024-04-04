@@ -1,7 +1,7 @@
 const viewapidata=(tblid,data,hidetbl)=>{
     let tbl=tblid;
     let tbl_id=document.getElementById(tbl);
-    let data=data;
+    // let data=data;
     // console.log(data);
 
 
