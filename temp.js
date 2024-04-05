@@ -8,7 +8,6 @@ class database{
         this.host=process.env.host;
         this.password=process.env.password;
         this.database=db;
-        
     }
     connection()
     {

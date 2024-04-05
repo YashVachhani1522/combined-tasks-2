@@ -35,6 +35,7 @@ const getSearch=((req,res)=>{
                 else if(op=='and' && std_id!="" && first_name!="" && last_name!="" && contact!="" && email!="" && gender!="")
                 {
                     result=await db.executrquery(`select * from stdatt_student_master where std_id=${std_id} ${op} first_name='${first_name}' ${op} last_name='${last_name}' ${op} contact='${contact}' ${op} email='${email}' ${op} gender='${gender}'`);
+                    
                 }
                 else if(op=='or')
                 {
