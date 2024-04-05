@@ -39,11 +39,12 @@ class database{
         return res;
     }
     
-    executrquery=async(q,arr)=>{
-        console.log(q)
+    executrquery=async(q,arr=[])=>{
+        // console.log(q)
         let con=await this.connection()
         let res=new Promise((resolve,reject)=>{
-            let res=con.query(q,arr=[],(err,result)=>{
+            console.log(q,arr)
+            let res=con.query(q,arr,(err,result)=>{
                 if(err)
                 {
                     reject(err)
@@ -66,7 +67,7 @@ class database{
     fatchdata2=async(table,id)=>{
         let con=await this.connection()
         let q=`select * from ${table} where candidate_id=${id}`;
-        console.log(q);
+        // console.log(q);
         let result=  new Promise((resolve,reject)=>{
               con.query(q,(err,result)=>{
                   if(err)
@@ -104,7 +105,7 @@ class database{
             arr.push(`${data[key]}`);   
         })
         // q=q.slice(0,q.length-1)+');'
-        console.log(arr);
+        // console.log(arr);
         return await this.executrquery(q,arr);
     }
 
@@ -121,7 +122,7 @@ class database{
             q+=" and "
         })
         let arr=[]
-        q=q.slice(0,q.length-4)+`;`
+        q=q.slice(0,q.length-5)+`;`
 
         Object.keys(data).forEach(key=>{
             arr.push(`${data[key]}`)
@@ -129,9 +130,7 @@ class database{
         Object.keys(conditions).forEach(key=>{
             arr.push(`${conditions[key]}`)
         })
-        console.log(arr)
-        console.log(q)
-        
+       
         return await this.executrquery(q,arr);
     }
 
@@ -156,8 +155,8 @@ class database{
         Object.keys(conditions).forEach(key=>{
             arr.push(`${conditions[key]}`)
         })
-        console.log(arr)
-        console.log(q)
+        // console.log(arr)
+        // console.log(q)
         return await this.executrquery(q,arr);
     }
     
@@ -170,12 +169,12 @@ class database{
             q+="and "
         })
         q=q.slice(0,q.length-5)+';'
-        console.log(q)
+        // console.log(q)
         Object.keys(conditions).forEach(key=>{
             arr.push(`${conditions[key]}`)
         })
-        console.log(arr.length)
-        return await this.executrquery(q);
+        // console.log(arr.length)
+        return await this.executrquery(q,arr);
     }
 }
 module.exports=database;

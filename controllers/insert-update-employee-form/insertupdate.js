@@ -298,13 +298,14 @@ const getbasicdetailsdata=(async(req,res)=>{
         res.send(e)
     }
 })
-const getData=(async(req,res)=>{
+const getData2=(async(req,res)=>{
    try{
 
     let id=req.params.id
     // console.log(id);
     let db=new connection(process.env.database)
     let baisic_details=await db.fatchdata2('baisic_details',id);
+    console.log(baisic_details)
     let education=await db.fatchdata2('education',id);
     let languages=await db.fatchdata2('language_known',id);
     let tech=await db.fatchdata2('technologies_know',id);
@@ -326,7 +327,7 @@ const getData=(async(req,res)=>{
     {
         obj.refcon[0].prefered_location=obj.refcon[0].prefered_location.split(',')  
     }
-    // console.log(obj);
+    console.log(obj);
 
     res.send(obj);
     }
@@ -355,4 +356,4 @@ const getDelete=(async(req,res)=>{
         res.send(e)
     }
 })
-module.exports={getInsert,postInsert,getData,getbasicdetailsdata, display,getDelete};
+module.exports={getInsert,postInsert,getData2,getbasicdetailsdata, display,getDelete};

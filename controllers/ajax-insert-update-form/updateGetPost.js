@@ -28,7 +28,7 @@ const postUpdateId=(async(req,response)=>{
           data[key]=[data[key]]
       }
   })
-  console.log(data)
+  console.log("++++++++++++++++++++++++++++++++++",data)
   let db=new database(process.env.database);
  
 
@@ -51,7 +51,7 @@ const postUpdateId=(async(req,response)=>{
           department:data.department
       }
   let res=await db.update(obj,"candidate_masters",{id:data.canid})
-  
+  console.log("--------------------------",res)
   let result=await db.executrquery(`select id,candidate_id,course,board,passing_year,percentage from 
   education_details where candidate_id=${data.canid}`);
   let result1=result;

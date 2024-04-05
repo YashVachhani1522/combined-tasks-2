@@ -29,8 +29,14 @@ const getSearch=((req,res)=>{
                 }
                 else if(onlyid!=undefined)
                 {
-                    console.log("asjhdask")
-                    result=await db.executrquery(`select * from stdatt_student_master where std_id=${onlyid}`);
+                    if(onlyid.trim()!="")
+                    {
+                        result=await db.executrquery(`select * from stdatt_student_master where std_id=${onlyid}`);
+                    }
+                    else
+                    {
+                        result=await db.executrquery("select * from stdatt_student_master");
+                    }
                 }
                 else if(op=='and' && std_id!="" && first_name!="" && last_name!="" && contact!="" && email!="" && gender!="")
                 {
