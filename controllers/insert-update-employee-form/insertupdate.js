@@ -14,7 +14,7 @@ const postInsert=(serverside,async(req,res)=>{
     try{
 
     let data=req.body;
-    // console.log(data);
+    console.log(data);
 
     let db=new connection(process.env.database)
 
@@ -29,7 +29,7 @@ const postInsert=(serverside,async(req,res)=>{
         phone_number:data.pnumber,
         state:data.state,
         gender:data.gender,
-        relationship_status:data.relation_op,
+        relationship_status:data.relationop,
         dob:data.dob,
     })
     // console.log(res1);
@@ -37,7 +37,7 @@ const postInsert=(serverside,async(req,res)=>{
     // console.log(lastid)
     // console.log(data.ssc[0]);
 
-    res2=await db.createquery('education',{
+    let res2=await db.createquery('education',{
         can_id:lastid,
         course:'SSC',
         uni_or_board:data.ssc[0],
@@ -58,6 +58,7 @@ const postInsert=(serverside,async(req,res)=>{
         passing_year:data.ug[2],
         percentage:data.ug[3],
     })
+    
     if(data.pg!=null)
     {
         let res2=await db.createquery('education',{
@@ -125,6 +126,7 @@ const postInsert=(serverside,async(req,res)=>{
             writes:w,
             speak:s
         })
+        console.log(res2)
          }
         if(data.english!=undefined)
         {
@@ -151,6 +153,8 @@ const postInsert=(serverside,async(req,res)=>{
                 writes:w,
                 speak:s
             })
+        console.log(res2)
+
          }
 
          if(data.gujrati!=undefined)
@@ -178,9 +182,11 @@ const postInsert=(serverside,async(req,res)=>{
                 writes:w,
                 speak:s
             })
+        console.log(res2)
+
         }
         
-        
+
         //languagesknown
 
         if(data.php!=undefined)
@@ -271,7 +277,7 @@ const postInsert=(serverside,async(req,res)=>{
         }
         let loc="";
         
-        let res2=await db.createquery('references_contact',{
+        res2=await db.createquery('references_contact',{
             can_id:lastid,
             prefered_location:data.pre_loc!=undefined?data.pre_loc.toString():null,
             notice_periods:data.np,

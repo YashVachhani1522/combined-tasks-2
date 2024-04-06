@@ -1,277 +1,298 @@
-const req=(arr)=>{
-    for(let i=0;i<arr.length;i++)
-    {
-        if(document.getElementById(arr[i]).value.trim()=="")
-        {
-            return arr[i]
+const req = (arr) => {
+    var arr2 = []
+    for (let i = 0; i < arr.length; i++) {
+
+        // let parent=document.getElementById(arr[i]).parentNode.children;
+        // let span=parent[parent.length-1]
+        // if(span.tagName=="SPAN")
+        // {
+        //     span.remove()
+        // }
+        if (document.getElementById(arr[i]).value.trim() == "") {
+            arr2.push(arr[i])
         }
     }
-    return true;
+    return arr2;
 }
-const checkednum=(arr)=>{
-    
-    for(let i=0;i<arr.length;i++)
-    {
-        if(!isNaN(Number(document.getElementById(arr[i]).value)))
-        {
-            return arr[i]
+const checkednum = (arr) => {
+    var arr2 = []
+    for (let i = 0; i < arr.length; i++) {
+        if (!isNaN(Number(document.getElementById(arr[i]).value))) {
+            arr2.push(arr[i])
         }
     }
-    return true;
+    return arr2;
 }
 
-const rg=(id,type)=>{
+const rg = (id, type) => {
     let CONTACT = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
-    let DATE =/\d{4}-\d{2}-\d{2}/
-    let YEAR=/(?:(?:19|20)[0-9]{2})/;
-    let PER=/(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
-    let EMAIL= /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let DATE = /\d{4}-\d{2}-\d{2}/
+    let YEAR = /(?:(?:19|20)[0-9]{2})/;
+    let PER = /(^100(\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\.[0-9]{1,2})?$)/;
+    let EMAIL = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    switch(type)
-    {
+    switch (type) {
         case 'email':
-            if(!document.getElementById(id).value.match(EMAIL))
-            {
+            if (!document.getElementById(id).value.match(EMAIL)) {
                 return id;
             }
             break;
         case 'mobile':
-            if(!document.getElementById(id).value.match(CONTACT))
-            {
+            if (!document.getElementById(id).value.match(CONTACT)) {
                 return id;
             }
             break;
         case 'date':
-            if(!document.getElementById(id).value.match(DATE))
-            {
+            if (!document.getElementById(id).value.match(DATE)) {
                 return id;
-            }     
+            }
             break;
         case 'year':
-            if(!document.getElementById(id).value.match(YEAR))
-            {
+            if (!document.getElementById(id).value.match(YEAR)) {
                 return id;
-            }     
+            }
             break;
         case 'per':
-        if(!document.getElementById(id).value.match(PER))
-        {
-            return id;
-        }     
-        break;
+            if (!document.getElementById(id).value.match(PER)) {
+                return id;
+            }
+            break;
     }
     return true;
 }
-const arrayreqvalid=(arr)=>{
-        for(let i=0;i<arr.length;i++)
-        {
-            let obj=arr[i];
-            let count=0;
-            let inputs=document.getElementsByName(obj.name);
-            for(let j=0;j<inputs.length;j++)
-            {
-                if(obj.type=='text')
-                {
-                    if(inputs[j].value !="")
-                    {
-                        count++;
-                    }
-                }
-                else
-                {
-                    if(inputs[j].checked==true)
-                    {
-                        count++;
-                    }
-
+const arrayreqvalid = (arr) => {
+    let arr2 = []
+    for (let i = 0; i < arr.length; i++) {
+        let obj = arr[i];
+        let count = 0;
+        let inputs = document.getElementsByName(obj.name);
+        for (let j = 0; j < inputs.length; j++) {
+            if (obj.type == 'text') {
+                if (inputs[j].value != "") {
+                    count++;
                 }
             }
-            // console.log(count); 
-            // console.log(obj.size);
+            else {
+                if (inputs[j].checked == true) {
+                    count++;
+                }
 
-            if(obj.required==true && count>=obj.size)
-            {
-                continue;
             }
-            else if(obj.required==false && (count==0 || count>=obj.size)) 
-            {
-                continue;
-            }
-            else
-            {
-                return obj;
-            }
-
         }
-        return true;
+        // console.log(count); 
+        // console.log(obj.size);
+
+        if (obj.required == true && count >= obj.size) {
+            continue;
+        }
+        else if (obj.required == false && (count == 0 || count >= obj.size)) {
+            continue;
+        }
+        else {
+            arr2.push(obj);
+        }
+
+    }
+    return arr2;
 }
-const fun=()=>{
-    let ids=['firstname','lastname','designation','address1','email','address2','p_number','city','zipcode','dob','sscboard','sscpassingyear','sscper','hscboard','hscpassingyear','hscper','ugcname','uguni','ugpassingyear','ugper','ectc','cctc'];    
-    let ans=req(ids);
 
-    if(ans==true)
-    {
-        let arr2=['firstname','lastname','designation','address1','address2','city','sscboard','hscboard','ugcname','uguni'];
-        let res2=checkednum(arr2)
-        if(res2!=true)
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid value ${res2}`;
-            document.getElementById(res2).focus();
-            return false ; 
-        }
-        
-        if( rg('email','email')=="email")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid Email`;
-            document.getElementById(rg('email','email')).focus();
-            return false ; 
-        }
-        if( rg('p_number','mobile')=="p_number")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid Phone number`;return false ; 
-        }
-        if( rg('dob','date')=="dob")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid Birth date`;return false ; 
-        }
-        
-        if( rg('sscpassingyear','year')=="sscpassingyear")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid SSC passing year`;return false ; 
-        }
-        if( rg('hscpassingyear','year')=="hscpassingyear")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid HSC passing year`;return false ; 
-        }
-        
-        if( rg('sscper','per')=="sscper")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid SSC percentage`;return false ; 
-        }
-        if( rg('hscper','per')=="hscper")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid HSC percentage`;return false ; 
-        }
+const printerror = (ele, msg) => {
+    // console.log(ans)
+    // ans.forEach(ele => {
+    let parent = document.getElementById(ele).parentNode
+    let span = `<span class='text-danger'>${msg}</span>`
+    parent.innerHTML += span
+    // });    
+}
+const printerror2 = (ele, msg) => {
+    // console.log(ans)
+    // ans.forEach(ele => {
+    let parent = document.getElementsByName(ele)[0].parentNode
+    let span = `<span class='text-danger'>${msg}</span>`
+    parent.innerHTML += span
+    // });    
+}
 
-           
+const removemsg = () => {
+    let errors = document.querySelectorAll("span.text-danger")
+    errors.forEach(err => {
+        err.remove();
+    })
+}
+const fun = () => {
+    removemsg()
+    let errorArray = [];
+    let errorArray2 = [];
+    let ids = ['firstname', 'lastname', 'designation', 'address1', 'email', 'address2', 'p_number', 'city', 'zipcode', 'dob', 'sscboard', 'sscpassingyear', 'sscper', 'hscboard', 'hscpassingyear', 'hscper', 'ugcname', 'uguni', 'ugpassingyear', 'ugper'];
+    let ans = req(ids);
+    ans.forEach(item => {
+        if (errorArray.indexOf(item) < 0)
+            errorArray.push(item);
+    })
 
-        if( rg('ugpassingyear','year')=="ugpassingyear")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid UG passing year`;return false ; 
-        }
-        
-        if( rg('ugper','per')=="ugper")
-        {
-            document.getElementById('print-err').innerHTML=`Enter valid UG percentage`;return false ; 
-        }
+    let arr2 = ['firstname', 'lastname', 'designation', 'address1', 'address2', 'city', 'sscboard', 'hscboard', 'ugcname', 'uguni'];
+    ans = checkednum(arr2)
+    ans.forEach(item => {
+        if (errorArray.indexOf(item) < 0)
+            errorArray.push(item);
+    })
 
-       if(document.getElementById('male').checked==false && document.getElementById('female').checked==false )
-       {
-            document.getElementById('print-err').innerHTML=`Select value for gender`; return false ;
-       } 
-        let obj=[
-            {
-            name:'pg',
-            label:'PG',
-            required:false,
-            type:'text',
-            size:'4'
-        },
-        {
-            name:'work1',
-            label:'work-1',
-            required:false,
-            type:'select',
-            size:'4'
-        },
-        {
-            name:'work2',
-            label:'work-2',
-            required:false,
-            type:'select',
-            size:'4'
-        },
-        {
-            name:'work3',
-            label:'work-3',
-            required:false,
-            type:'select',
-            size:'4'
-        },
-        {
-            name:'hindi',
-            label:'HINDI',
-            required:false,
-            type:'select',
-            size:'2'
-        },
-        {
-            name:'english',
-            label:'ENGLISH',
-            required:false,
-            type:'select',
-            size:'2'
-        },
-        {
-            name:'gujrati',
-            label:'GUJRATI',
-            required:false,
-            type:'select',
-            size:'2'
-        },
-        {
-            name:'php',
-            label:'PHP',
-            required:false,
-            type:'select',
-            size:'2'
-        },
-        {
-            name:'mysql',
-            label:'MYSQL',
-            required:false,
-            type:'select',
-            size:'2'
-        },
-        {
-            name:'laravel',
-            label:'LARAVEl',
-            required:false,
-            type:'select',
-            size:'2'
-        },
-        {
-            name:'oracle',
-            label:'ORACLE',
-            required:false,
-            type:'select',
-            size:'2'
-        },
-        {
-            name:'pre1',
-            label:'PREFRENCES-1',
-            required:false,
-            type:'text',
-            size:'3'
-        },
-        {
-            name:'pre2',
-            label:'PREFRENCES-2',
-            required:false,
-            type:'text',
-            size:'3'
-        }
-        ]  
-        let obj2=arrayreqvalid(obj);
-        if(arrayreqvalid(obj)!=true)
-        {
-            document.getElementById('print-err').innerHTML=`Enter value for ${obj2.label}`; return false ; 
-        }
-        return true;
+    if (rg('email', 'email') == "email") {
+        if (errorArray.indexOf("email") < 0)
+            errorArray.push("email");
     }
-    else
-    {
-        document.getElementById('print-err').innerHTML=`Enter value for ${ans}`; return false ; 
+    if (rg('p_number', 'mobile') == "p_number") {
+        if (errorArray.indexOf("p_number") < 0)
+            errorArray.push("p_number");
+    }
+    if (rg('dob', 'date') == "dob") {
+        if (errorArray.indexOf("dob") < 0)
+            errorArray.push("dob");
     }
 
+    if (rg('sscpassingyear', 'year') == "sscpassingyear") {
+        if (errorArray.indexOf("sscpassingyear") < 0)
+            errorArray.push("sscpassingyear");
+    }
+
+    if (rg('hscpassingyear', 'year') == "hscpassingyear") {
+        if (errorArray.indexOf("hscpassingyear") < 0)
+            errorArray.push("hscpassingyear");
+    }
+    if (rg('sscper', 'per') == "sscper") {
+        if (errorArray.indexOf("sscper") < 0)
+            errorArray.push("sscper");
+    }
+    if (rg('hscper', 'per') == "hscper") {
+        if (errorArray.indexOf("hscper") < 0)
+            errorArray.push("hscper");
+    }
+
+    if (rg('ugpassingyear', 'year') == "ugpassingyear") {
+        if (errorArray.indexOf("ugpassingyear") < 0)
+            errorArray.push("ugpassingyear");
+    }
+
+    if (rg('ugper', 'per') == "ugper") {
+        if (errorArray.indexOf("ugper") < 0)
+            errorArray.push("ugper");
+    }
+
+    if (document.getElementById('male').checked == false && document.getElementById('female').checked == false) {
+        if (errorArray.indexOf("gender") < 0)
+            errorArray.push("gender");
+    }
+
+    let obj = [
+        {
+            name: 'pg',
+            label: 'PG',
+            required: false,
+            type: 'text',
+            size: '4'
+        },
+        {
+            name: 'work1',
+            label: 'work-1',
+            required: false,
+            type: 'select',
+            size: '4'
+        },
+        {
+            name: 'work2',
+            label: 'work-2',
+            required: false,
+            type: 'select',
+            size: '4'
+        },
+        {
+            name: 'work3',
+            label: 'work-3',
+            required: false,
+            type: 'select',
+            size: '4'
+        },
+        {
+            name: 'hindi',
+            label: 'HINDI',
+            required: false,
+            type: 'select',
+            size: '2'
+        },
+        {
+            name: 'english',
+            label: 'ENGLISH',
+            required: false,
+            type: 'select',
+            size: '2'
+        },
+        {
+            name: 'gujrati',
+            label: 'GUJRATI',
+            required: false,
+            type: 'select',
+            size: '2'
+        },
+        {
+            name: 'php',
+            label: 'PHP',
+            required: false,
+            type: 'select',
+            size: '2'
+        },
+        {
+            name: 'mysql',
+            label: 'MYSQL',
+            required: false,
+            type: 'select',
+            size: '2'
+        },
+        {
+            name: 'laravel',
+            label: 'LARAVEl',
+            required: false,
+            type: 'select',
+            size: '2'
+        },
+        {
+            name: 'oracle',
+            label: 'ORACLE',
+            required: false,
+            type: 'select',
+            size: '2'
+        },
+        {
+            name: 'pre1',
+            label: 'PREFRENCES-1',
+            required: false,
+            type: 'text',
+            size: '3'
+        },
+        {
+            name: 'pre2',
+            label: 'PREFRENCES-2',
+            required: false,
+            type: 'text',
+            size: '3'
+        }
+    ]
+    let obj2 = arrayreqvalid(obj);
+    console.log(obj2)
+    obj2 = obj2.map(item => item.name)
+    console.log(obj2)
+    obj2.forEach(ele => {
+        if (errorArray2.indexOf(ele) < 0)
+            errorArray2.push(ele)
+    })
+    if (errorArray.length > 0 || errorArray2.length > 0) {
+        errorArray.forEach(item => {
+            printerror(item, `${item} is invalid..`);
+        })
+        errorArray2.forEach(ele => {
+            console.log(ele)
+            printerror2(ele, `${ele} is invalid..`);
+        })
+        return false;
+    }
+    return true;
 }
