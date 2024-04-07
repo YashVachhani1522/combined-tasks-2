@@ -172,6 +172,7 @@ const postForm=(async(req,res)=>{
         }
         
     }
+    res.redirect("/display");
 }
 catch(e)
 {

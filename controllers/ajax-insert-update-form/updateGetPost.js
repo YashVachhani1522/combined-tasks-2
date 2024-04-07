@@ -11,7 +11,7 @@ const getUpdateId=((req,res)=>{
       res.send(e)
   }
 })
-const postUpdateId=(async(req,response)=>{
+const postUpdateId=(async(req,res1)=>{
   try{
   let data=req.body;
   let  keys=Object.keys(data)
@@ -21,14 +21,15 @@ const postUpdateId=(async(req,response)=>{
           data[key]=null;
       }
   })
-  let arr=["course","board","passing_year","percentage","compny_name","work_designation","from_date","to_date","name","contact","relation"]
+  console.log(data)
+  let arr=["course","board","passing_year","percentage","company_name","work_designation","from_date","to_date","name","contact","relation"]
   arr.forEach(key=>{
       if(typeof(data[key])=="string")
       {
           data[key]=[data[key]]
       }
   })
-  console.log("++++++++++++++++++++++++++++++++++",data)
+//   console.log("++++++++++++++++++++++++++++++++++",data)
   let db=new database(process.env.database);
  
 
@@ -51,7 +52,7 @@ const postUpdateId=(async(req,response)=>{
           department:data.department
       }
   let res=await db.update(obj,"candidate_masters",{id:data.canid})
-  console.log("--------------------------",res)
+//   console.log("--------------------------",res)
   let result=await db.executrquery(`select id,candidate_id,course,board,passing_year,percentage from 
   education_details where candidate_id=${data.canid}`);
   let result1=result;
@@ -88,7 +89,7 @@ const postUpdateId=(async(req,response)=>{
       else
       {
           let result=await db.delete("education_details",{candidate_id:data.canid,course:data.course[i]});
-          console.log("yes")
+        //   console.log("yes")
               result=await db.insertdata({
                   candidate_id:data.canid,
                   course:data.course[i],
@@ -105,10 +106,63 @@ const postUpdateId=(async(req,response)=>{
   }
 
   // ---------------------------work ------------------
+//   result=await db.executrquery(`select * from work_experiences2 where candidate_id=${data.canid}`);
+//   result1=result;
+  
+//   for(let i=0;i<data.company_name.length;i++)
+//   {
+//       let flag=false;
+//       for(let j=0;j<result.length;j++)
+//       {
+//           if(data.company_name[i]==result[j]["company_name"])
+//           {
+//               flag=true
+//           }
+//       }
+//       if(flag==true)
+//       {
+//           let result=await db.update({
+//               company_name:data.company_name[i],
+//               work_designation:data.work_designation[i],
+//               from_date:data.from_date[i],
+//               to_date:data.to_date[i]
+//           },"work_experiences2",{candidate_id:data.canid,company_name:data.company_name[i]})
+//           if(result.affectedRows==0)
+//           {
+//               let result=await db.insertdata({
+//                   candidate_id:data.canid,
+//                   company_name:data.company_name[i],
+//                     work_designation:data.work_designation[i],
+//                     from_date:data.from_date[i],
+//                     to_date:data.to_date[i]
+//               },"work_experiences2")
+//           }
+//       }
+//       else
+//       {
+//           let result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:data.company_name[i]});
+//         //   console.log("yes")
+//               result=await db.insertdata({
+//                 candidate_id:data.canid,
+//                 company_name:data.company_name[i],
+//                   work_designation:data.work_designation[i],
+//                   from_date:data.from_date[i],
+//                   to_date:data.to_date[i]
+//             },"work_experiences2")
+//       }
+//   }
+//   // console.log(data.course.length,result.length)
+//   for(let i=data.company_name.length;i<result1.length;i++)
+//   {
+//       let result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:data.company_name[i]});
+//   }
+
 
   result=await db.executrquery(`select * from work_experiences2 where candidate_id=${data.canid}`);
   result1=result;
-  
+  console.log(data)
+
+    console.log(result1)
   for(let i=0;i<data.company_name.length;i++)
   {
       let flag=false;
@@ -140,6 +194,7 @@ const postUpdateId=(async(req,response)=>{
       }
       else
       {
+
           let result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:data.company_name[i]});
           // console.log("yes")
               result=await db.insertdata({
@@ -149,17 +204,19 @@ const postUpdateId=(async(req,response)=>{
                   from_date:data.from_date[i],
                   to_date:data.to_date[i],
               },"work_experiences2")
+            //   console.log(result)
       }
   }
-  for(let i=data.name.length;i<result1.length;i++)
+  for(let i=data.company_name.length;i<result1.length;i++)
   {
-      let result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:result1[i].name});
+      let result=await db.delete("work_experiences2",{candidate_id:data.canid,company_name:result1[i].company_name});
+      console.log(result)
   }
 
   // -------------------- references --------------------
-  result=await db.executrquery(`select * from reference_contacts where candidate_id=${data.canid}`);
+  result=await db.executrquery(`select * from reference_contacts where candidate_id='${data.canid}'`);
   result1=result;
-  
+  console.log(result1);
   for(let i=0;i<data.name.length;i++)
   {
       let flag=false;
@@ -217,7 +274,7 @@ const postUpdateId=(async(req,response)=>{
           data[key]=JSON.stringify(arr.slice(1,arr.length))
       }        
   })
-  console.log(data,language)
+//   console.log(data,language)
   result=await db.executrquery(`select * from languages where candidate_id=${data.canid}`);
   result1=result;
   
@@ -317,10 +374,12 @@ const postUpdateId=(async(req,response)=>{
   {
       let result=await db.delete("technologies",{candidate_id:data.canid,language:result1[i]["technology"]});
   }
+  res1.send({error: "data is updated...."})
+//   response.send(result);
 }
-  catch(e)
+  catch(error)
   {
-      response.send(e)
+    res1.send(error)
   }
 })
 module.exports={getUpdateId,postUpdateId}

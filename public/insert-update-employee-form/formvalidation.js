@@ -1,13 +1,6 @@
 const req = (arr) => {
     var arr2 = []
     for (let i = 0; i < arr.length; i++) {
-
-        // let parent=document.getElementById(arr[i]).parentNode.children;
-        // let span=parent[parent.length-1]
-        // if(span.tagName=="SPAN")
-        // {
-        //     span.remove()
-        // }
         if (document.getElementById(arr[i]).value.trim() == "") {
             arr2.push(arr[i])
         }
@@ -277,9 +270,7 @@ const fun = () => {
         }
     ]
     let obj2 = arrayreqvalid(obj);
-    console.log(obj2)
     obj2 = obj2.map(item => item.name)
-    console.log(obj2)
     obj2.forEach(ele => {
         if (errorArray2.indexOf(ele) < 0)
             errorArray2.push(ele)

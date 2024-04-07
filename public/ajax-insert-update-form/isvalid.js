@@ -1,25 +1,47 @@
-const req=(arr)=>{
-    for(let i=0;i<arr.length;i++)
-    {
-        if(document.getElementById(arr[i]).value.trim()=="")
-        {
-            return arr[i]
+const req = (arr) => {
+    var arr2 = []
+    for (let i = 0; i < arr.length; i++) {
+        if (document.getElementById(arr[i]).value.trim() == "") {
+            arr2.push(arr[i])
         }
     }
-    return true;
+    return arr2;
+}
+const printerror = (ele, msg) => {
+    // console.log(ans)
+    // ans.forEach(ele => {
+    let parent = document.getElementById(ele).parentNode
+    let span = `<span class='text-danger'>${msg}</span>`
+    parent.innerHTML += span
+    // });    
+}
+const printerror2 = (ele, msg) => {
+    // console.log(ans)
+    // ans.forEach(ele => {
+    let parent = document.getElementsByName(ele)[0].parentNode
+    let span = `<span class='text-danger'>${msg}</span>`
+    parent.innerHTML += span
+    // });    
+}
+const removemsg = () => {
+    let errors = document.querySelectorAll("span.text-danger")
+    errors.forEach(err => {
+        err.remove();
+    })
 }
 const checkednum=(arr)=>{
-    
+    let arr2=[]
     for(let i=0;i<arr.length;i++)
     {
         if(!isNaN(Number(document.getElementById(arr[i]).value)))
         {
-            return arr[i]
+             arr2.push(arr[i])
         }
     }
-    return true;
+    return arr2;
 }
 const checkdynemicbox=(arr)=>{
+    let arr2=[]
     for(let i=0;i<arr.length;i++)
     {
         let obj=arr[i];
@@ -29,7 +51,7 @@ const checkdynemicbox=(arr)=>{
                 element=document.getElementsByName(element);
                 let row=[]
                 element.forEach(single=>{
-                    if(single.value!="")
+                    if(single.value.trim()!="")
                     {
                         row.push(single.value)
                     }
@@ -41,12 +63,12 @@ const checkdynemicbox=(arr)=>{
         {
             if(size!=result[i].length)
             {
-                return obj;
+                arr2.push(obj);
             }
         }
 
     }
-    return true;
+    return arr2;
 }
 const rg=(id,type)=>{
     let CONTACT = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
@@ -91,6 +113,7 @@ const rg=(id,type)=>{
     return true;
 }
 const arrayreqvalid=(arr)=>{
+    let arr2=[]
     for(let i=0;i<arr.length;i++)
     {
         let obj=arr[i];
@@ -112,7 +135,6 @@ const arrayreqvalid=(arr)=>{
 
                 if(inputs[j].checked==true)
                 {
-
                     count++;
                 }
 
@@ -131,63 +153,61 @@ const arrayreqvalid=(arr)=>{
         }
         else
         {
-            return obj;
+            arr2.push(obj);
         }
 
     }
-    return true;
+    return arr2;
 }
 
 const isvalid_baisicdetails=(container)=>
 {
+    let errorArray=[]
+    let errorArray2=[]
+    removemsg()
     let arr=['first_name','last_name','designation','email','phone_no','birthdate','city','address1','address2']
     let ans=req(arr)
-    if(ans==true)
-    {
-        let checknum=['first_name','last_name','designation','address1','address2','city']
-        let checksumans=checkednum(checknum);
-        if(checksumans!=true)
-        {
-            document.getElementById('print-err').style.display='block';
-            document.getElementById('print-err').innerHTML=`Enter valid value ${checksumans}`;
-            document.getElementById(checksumans).focus();
-            return false ;
-        }
-        if(document.getElementById('male').checked==false && document.getElementById('female').checked==false )
-        {
-            document.getElementById('print-err').style.display='block';
-            document.getElementById('print-err').innerHTML=`Select value for gender`; 
-            return false ;
-        } 
-        if(rg('email','email')=="email")
-        {
-            document.getElementById('print-err').style.display='block';
-            document.getElementById('print-err').innerHTML=`Enter valid Email`;
-            document.getElementById(rg('email','email')).focus();
-            return false ; 
-        }
-        if( rg('phone_no','mobile')=="phone_no")
-        {
-            document.getElementById('print-err').style.display='block';
-            document.getElementById('print-err').innerHTML=`Enter valid Phone number`;
-            document.getElementById(rg('phone_no','mobile')).focus();
-            return false ; 
-        }
-        if( rg('birthdate','date')=="birthdate")
-        {
-            document.getElementById('print-err').style.display='block';
-            document.getElementById('print-err').innerHTML=`Enter valid Birth date`;
-            document.getElementById(rg('birthdate','date')).focus();
-            return false ; 
-        }
+    ans.forEach(item => {
+        if (errorArray.indexOf(item) < 0)
+            errorArray.push(item);
+    })
+    let checknum=['first_name','last_name','designation','address1','address2','city']
+    
+    let checksumans=checkednum(checknum);
+    checksumans.forEach(item => {
+        if (errorArray.indexOf(item) < 0)
+            errorArray.push(item);
+    })
+
+    if (rg('email', 'email') == "email") {
+        if (errorArray.indexOf("email") < 0)
+            errorArray.push("email");
     }
-    else
-    {
-        document.getElementById('print-err').style.display='block';
-        document.getElementById(ans).focus();
-        document.getElementById('print-err').innerHTML=`Enter value for ${ans}`; return false ; 
+    if (rg('phone_no', 'mobile') == "phone_no") {
+        if (errorArray.indexOf("phone_no") < 0)
+            errorArray.push("phone_no");
+    }
+    if (rg('birthdate', 'date') == "birthdate") {
+        if (errorArray.indexOf("birthdate") < 0)
+            errorArray.push("birthdate");
+    }
+    if (document.getElementById('male').checked == false && document.getElementById('female').checked == false) {
+        if (errorArray.indexOf("gender") < 0)
+            errorArray.push("gender");
+    }
+    
+    if (errorArray.length > 0 || errorArray2.length > 0) {
+        errorArray.forEach(item => {
+            printerror(item, `${item} is invalid..`);
+        })
+        errorArray2.forEach(ele => {
+            console.log(ele)
+            printerror2(ele, `${ele} is invalid..`);
+        })
+        return false;
     }
     return true;
+    
 }
 
 const isvalid_education=(container)=>{
@@ -196,12 +216,13 @@ const isvalid_education=(container)=>{
         data:['course','board','passing_year','percentage'],
         required:false
     }]
-    if(checkdynemicbox(obj)!=true)
+    if(checkdynemicbox(obj).length>0)
     {   
         document.getElementById('print-err').style.display='block';
-        document.getElementById('print-err').innerHTML=`Enter value for ${checkdynemicbox(obj).label}`; 
+        document.getElementById('print-err').innerHTML=`Enter value for ${checkdynemicbox(obj)[0].label}`; 
         return false ;      
     }   
+    return true
 }
 const isvalid_work=(container)=>{
     let obj=[{
@@ -211,10 +232,10 @@ const isvalid_work=(container)=>{
     }]
     console.log("ajkdjhfgauikshfskajdghauihknjskdhj")
     console.log(obj)
-    if(checkdynemicbox(obj)!=true)
+    if(checkdynemicbox(obj).length>0)
     {   
         document.getElementById('print-err').style.display='block';
-        document.getElementById('print-err').innerHTML=`Enter value for ${checkdynemicbox(obj).label}`; 
+        document.getElementById('print-err').innerHTML=`Enter value for ${checkdynemicbox(obj)[0].label}`; 
         return false ;      
     }   
 }
@@ -224,15 +245,18 @@ const isvalid_ref=()=>{
         data:['name','contact','relation'],
         required:false
     }]
-    if(checkdynemicbox(obj)!=true)
-    {   
+    if(checkdynemicbox(obj).length>0)
+    { 
+        var ans=checkdynemicbox(obj)
         document.getElementById('print-err').style.display='block';
-        document.getElementById('print-err').innerHTML=`Enter value for ${checkdynemicbox(obj).label}`; 
+        document.getElementById('print-err').innerHTML=`Enter value for ${ans[0].label}`; 
         return false ;      
     }   
 }
 const isvalid_language=()=>{
-
+    removemsg()
+    let errorArray=[]
+    let errorArray2=[]
     let obj=[
     {
         name:'hindi',
@@ -256,15 +280,29 @@ const isvalid_language=()=>{
         size:'2'
     },]
     let obj2=arrayreqvalid(obj);
-    if(arrayreqvalid(obj)!=true)
-    {
-        document.getElementById('print-err').style.display='block';
-        document.getElementById('print-err').innerHTML=`Enter value for ${obj2.label}`; 
-        return false ; 
+    obj2 = obj2.map(item => item.name)
+    obj2.forEach(ele => {
+        if (errorArray2.indexOf(ele) < 0)
+            errorArray2.push(ele)
+    })
+    if (errorArray.length > 0 || errorArray2.length > 0) {
+        errorArray.forEach(item => {
+            printerror(item, `${item} is invalid..`);
+        })
+        errorArray2.forEach(ele => {
+            console.log(ele)
+            printerror2(ele, `${ele} is invalid..`);
+        })
+        return false;
     }
+    return true;
+   
 }
 const isvalid_tech=()=>{
-    obj=[
+    removemsg()
+    let errorArray2=[]
+    let errorArray=[]
+    let obj=[
         {
             name:'php',
             label:'PHP',
@@ -292,21 +330,32 @@ const isvalid_tech=()=>{
         },
     ]
     let obj2=arrayreqvalid(obj);
-    if(arrayreqvalid(obj)!=true)
-    {
-        document.getElementById('print-err').style.display='block';
-        document.getElementById('print-err').innerHTML=`Enter value for ${obj2.label}`; 
-        return false ; 
+    obj2 = obj2.map(item => item.name)
+    obj2.forEach(ele => {
+        if (errorArray2.indexOf(ele) < 0)
+            errorArray2.push(ele)
+    })
+    if (errorArray.length > 0 || errorArray2.length > 0) {
+        errorArray.forEach(item => {
+            printerror(item, `${item} is invalid..`);
+        })
+        errorArray2.forEach(ele => {
+            console.log(ele)
+            printerror2(ele, `${ele} is invalid..`);
+        })
+        return false;
     }
+    return true;
 }
 const isvalid_last=()=>{
     let arr=['prefered_location','expected_ctc','department']
     let ans=req(arr)
-    if(ans!=true)
+    if(ans.length>0)
     {
+        console.log(ans)
         document.getElementById('print-err').style.display='block';
-        document.getElementById(ans).focus();
-        document.getElementById('print-err').innerHTML=`Enter value for ${ans}`; return false ; 
+        document.getElementById(ans[0]).focus();
+        document.getElementById('print-err').innerHTML=`Enter value for ${ans[0]}`; return false ; 
     }
-
+    return true
 }

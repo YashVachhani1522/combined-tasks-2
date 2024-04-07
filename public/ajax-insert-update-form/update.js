@@ -103,12 +103,14 @@ const update=(mainobj)=>{
             birthdate:data.birthdate,
             state:data.state,
             city:data.city,
+            prefered_location:JSON.parse(data.prefered_location),
             notice_period:data.notice_period,
             expected_ctc:data.expected_ctc,
             current_ctc:data.current_ctc,
             department:data.department
            }
     
+           console.log()
     valueprint(obj);
     let obj2={
          gender:data.gender,
